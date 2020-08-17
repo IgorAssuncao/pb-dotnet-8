@@ -37,7 +37,7 @@ namespace Hortogram.Controllers
         [HttpPost]
         public void Post([FromBody] LoginAttributes loginAttributes)
         {
-            AuthService
+            //AuthService
         }
 
         // PUT: api/Auth/5
