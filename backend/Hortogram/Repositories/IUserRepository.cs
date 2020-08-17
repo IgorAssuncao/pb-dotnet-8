@@ -1,9 +1,12 @@
 ﻿using Context;
+using Models;
 
 namespace Repositories
 {
     public interface IUserRepository
     {
-        IUserContext UserDb { get; set; }
+        UserContext UserDb { get; set; }
+
+        void CreateUser(User user);
     }
 }

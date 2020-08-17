@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using Services;
 
 namespace Hortogram.Controllers
@@ -35,8 +36,11 @@ namespace Hortogram.Controllers
 
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] User user)
         {
+            UserService.CreateUser(user);
+
+            return Created(result);
         }
 
         // PUT: api/User/5

@@ -1,4 +1,6 @@
-﻿using Repositories;
+﻿using Models;
+using Repositories;
+using System;
 
 namespace Services
 {
@@ -9,6 +11,22 @@ namespace Services
         public UserService(IUserRepository userRepository)
         {
             UserRepository = userRepository;
+        }
+
+        public bool CreateUser(User user)
+        {
+            user.Id = Guid.NewGuid();
+
+            try
+            {
+                UserRepository.CreateUser(user);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }

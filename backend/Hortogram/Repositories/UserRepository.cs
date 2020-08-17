@@ -1,14 +1,22 @@
 ﻿using Context;
+using Models;
+using System;
 
 namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public IUserContext UserDb { get; set; }
+        public UserContext UserDb { get; set; }
 
-        public UserRepository(IUserContext userContext)
+        public UserRepository(UserContext userContext)
         {
             UserDb = userContext;
+        }
+
+        public void CreateUser(User user)
+        {
+            UserDb.UserDb.Add(user);
+            UserDb.SaveChanges();
         }
     }
 }

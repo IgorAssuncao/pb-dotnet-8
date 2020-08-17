@@ -18,6 +18,14 @@ namespace Models
         {
         }
 
+        public User(string _FirstName, string _Lastname, string _Email, string _Password)
+        {
+            FirstName = _FirstName;
+            Lastname = _Lastname;
+            Email = _Email;
+            Password = _Password;
+        }
+
         public User(Guid _Id, string _FirstName, string _Lastname, string _Email, string _Password)
         {
             Id = _Id;
