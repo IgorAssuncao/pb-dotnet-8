@@ -28,7 +28,7 @@ namespace Hortogram.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetUser")]
         public string Get(int id)
         {
             return "value";
@@ -38,9 +38,9 @@ namespace Hortogram.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-            UserService.CreateUser(user);
+            bool result = UserService.CreateUser(user);
 
-            return Created(result);
+            return Ok();
         }
 
         // PUT: api/User/5

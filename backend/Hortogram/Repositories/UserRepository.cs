@@ -1,6 +1,7 @@
 ﻿using Context;
 using Models;
 using System;
+using System.Linq;
 
 namespace Repositories
 {
@@ -17,6 +18,11 @@ namespace Repositories
         {
             UserDb.UserDb.Add(user);
             UserDb.SaveChanges();
+        }
+
+        public User GetByEmail(string email)
+        {
+            return UserDb.UserDb.FirstOrDefault(user => user.Email == email);
         }
     }
 }

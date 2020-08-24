@@ -7,7 +7,8 @@ namespace Services
     {
         IUserRepository UserRepository { get; set; }
 
-        public bool CreateUser(User user);
+        bool CreateUser(User user);
 
+        User GetByEmail(string email);
     }
 }

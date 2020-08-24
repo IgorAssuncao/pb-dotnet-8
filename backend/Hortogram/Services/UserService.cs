@@ -28,5 +28,18 @@ namespace Services
                 return false;
             }
         }
+
+        public User GetByEmail(string email)
+        {
+            try
+            {
+                return UserRepository.GetByEmail(email);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
     }
 }

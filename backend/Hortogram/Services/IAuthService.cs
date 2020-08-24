@@ -4,6 +4,8 @@ namespace Services
 {
     public interface IAuthService
     {
-        IUserRepository UserRepository { get; set; }
+        IUserService UserService { get; set; }
+
+        public AuthenticationReturn Authenticate(string email, string password);
     }
 }

@@ -15,6 +15,9 @@ using Microsoft.Extensions.Logging;
 using Repositories;
 using Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Hortogram
 {
@@ -37,6 +40,8 @@ namespace Hortogram
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<IAuthService, AuthService>();
+
             services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -45,6 +50,26 @@ namespace Hortogram
                 options.Cookie.Name = "Hortogram.Session";
                 options.Cookie.IsEssential = true;
             });
+
+            var key = Encoding.UTF8.GetBytes(Configuration["JWT:Key"]);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = false;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +84,7 @@ namespace Hortogram
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();

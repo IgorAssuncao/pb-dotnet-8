@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace Hortogram.Controllers
 {
@@ -20,14 +21,13 @@ namespace Hortogram.Controllers
 
         // GET: api/Auth
         [HttpGet]
-        public void Get()
+        public IEnumerable<string> Get()
         {
-
-            // return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2" };
         }
 
         // GET: api/Auth/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetAuth")]
         public string Get(int id)
         {
             return "value";
@@ -35,9 +35,14 @@ namespace Hortogram.Controllers
 
         // POST: api/Auth
         [HttpPost]
-        public void Post([FromBody] LoginAttributes loginAttributes)
+        public IActionResult Post([FromBody] LoginAttributes loginAttributes)
         {
             //AuthService
+            AuthenticationReturn auth = AuthService.Authenticate(loginAttributes.Email, loginAttributes.Password);
+            if (!auth.Status)
+                return BadRequest(auth);
+
+            return Ok(auth);
         }
 
         // PUT: api/Auth/5

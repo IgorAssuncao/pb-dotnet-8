@@ -8,5 +8,7 @@ namespace Repositories
         UserContext UserDb { get; set; }
 
         void CreateUser(User user);
+
+        User GetByEmail(string email);
     }
 }
