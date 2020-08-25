@@ -23,7 +23,6 @@ namespace Hortogram
 {
     public class Startup
     {
-        private readonly 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
