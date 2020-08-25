@@ -59,9 +59,12 @@ namespace Services
         {
             try
             {
-                var outdatedUser = UserRepository.GetById(id);
-                var updatedUser = new User(id, firstName, lastName, email, password);
-                UserRepository.UpdateUser(outdatedUser, updatedUser);
+                var user = UserRepository.GetById(id);
+                user.FirstName = firstName;
+                user.Lastname = lastName;
+                user.Email = email;
+                user.Password = password;
+                UserRepository.UpdateUser(user);
                 return true;
             }
             catch (Exception e)

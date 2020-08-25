@@ -10,7 +10,7 @@ namespace Repositories
 
         void CreateUser(User user);
 
-        void UpdateUser(User outdatedUser, User updatedUser);
+        void UpdateUser(User user);
 
         User GetByEmail(string email);
 

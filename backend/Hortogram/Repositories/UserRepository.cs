@@ -20,10 +20,9 @@ namespace Repositories
             UserDb.SaveChanges();
         }
 
-        public void UpdateUser(User outdatedUser, User updatedUser)
+        public void UpdateUser(User user)
         {
-            UserDb.UserDb.Remove(outdatedUser);
-            UserDb.UserDb.Add(updatedUser);
+            UserDb.UserDb.Update(user);
             UserDb.SaveChanges();
         }
 
