@@ -55,15 +55,30 @@ namespace Services
             }
         }
 
+
         public bool UpdateUser(Guid id, string firstName, string lastName, string email, string password)
         {
             try
             {
                 var user = UserRepository.GetById(id);
-                user.FirstName = firstName;
-                user.Lastname = lastName;
-                user.Email = email;
-                user.Password = password;
+
+                if (!String.IsNullOrEmpty(firstName))
+                {
+                    user.FirstName = firstName;
+                }
+                if (!String.IsNullOrEmpty(lastName))
+                {
+                    user.Lastname = lastName;
+                }
+                if (!String.IsNullOrEmpty(email))
+                {
+                    user.Email = email;
+                }
+                if (!String.IsNullOrEmpty(password))
+                {
+                    user.Password = password;
+                }
+                
                 UserRepository.UpdateUser(user);
                 return true;
             }
