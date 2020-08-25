@@ -29,7 +29,7 @@ namespace Hortogram.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "GetUser")]
-        public string Get(int id)
+        public string Get(Guid id)
         {
             return "value";
         }
@@ -43,10 +43,14 @@ namespace Hortogram.Controllers
             return Ok();
         }
 
+
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromQuery] Guid id, [FromBody] string firstName, string lastName, string email, string password)
         {
+            bool result = UserService.UpdateUser(id, firstName, lastName, email, password);
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
