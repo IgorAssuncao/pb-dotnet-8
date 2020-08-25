@@ -14,6 +14,6 @@ namespace Services
 
         User GetById(Guid id);
 
-        bool UpdateUser(User user);
+        bool UpdateUser(Guid id, string firstName, string lastName, string email, string password);
     }
 }

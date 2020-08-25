@@ -55,11 +55,12 @@ namespace Services
             }
         }
 
-        public bool UpdateUser(User updatedUser)
+        public bool UpdateUser(Guid id, string firstName, string lastName, string email, string password)
         {
             try
             {
-                var outdatedUser = UserRepository.GetById(updatedUser.Id);
+                var outdatedUser = UserRepository.GetById(id);
+                var updatedUser = new User(id, firstName, lastName, email, password);
                 UserRepository.UpdateUser(outdatedUser, updatedUser);
                 return true;
             }

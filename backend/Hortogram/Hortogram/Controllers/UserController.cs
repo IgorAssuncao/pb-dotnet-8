@@ -43,22 +43,15 @@ namespace Hortogram.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public IActionResult Update([FromBody] User user)
+
+        // PUT: api/User/5
+        [HttpPut("{id}")]
+        public IActionResult Put([FromQuery] Guid id, [FromBody] string firstName, string lastName, string email, string password)
         {
-            bool result = UserService.UpdateUser(user);
+            bool result = UserService.UpdateUser(id, firstName, lastName, email, password);
 
             return Ok();
         }
-
-        // PUT: api/User/5
-        //[HttpPut("{id}")]
-        //public IActionResult Put([FromQuery] Guid id, [FromBody] string firstName, string lastName, string email, string password)
-        //{
-        //    bool result = UserService.UpdateUser(id, firstName, lastName, email, password);
-
-        //    return Ok();
-        //}
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
