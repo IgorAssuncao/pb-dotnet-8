@@ -2,37 +2,61 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./SignUp.css";
 import { useHistory } from "react-router-dom";
+import api from '../../services/api'
+import SimpleAlertModal from "../../components/SimpleAlertModal";
 
 function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [modalShow, setModalShow] = React.useState(false);
     let routerHistory = useHistory();
 
     function validateForm() {
-        return email.length > 0 && password.length > 0 && username.length > 0;
+        return email.length > 0 && password.length > 0
+            && firstName.length > 0 && lastName.length > 0;
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        routerHistory.push('/perfil')
+        api.post('/User', {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        }).then(function (response) {
+            routerHistory.push('/login')
+        }).catch(function (error) {
+            setModalShow(true)
+        });
     }
 
     return (
         <div className="SignUp">
             <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="username" bsSize="large">
-                <Form.Label>Usuário</Form.Label>
+                <Form.Group controlId="firstName" bsSize="large">
+                    <Form.Label>Usuário</Form.Label>
                     <Form.Control
                         autoFocus
                         type="text"
-                        placeholder="Nome de usuário"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        placeholder="Nome"
+                        value={firstName}
+                        onChange={e => setFirstName(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group controlId="lastName" bsSize="large">
+                    <Form.Label>Usuário</Form.Label>
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        placeholder="Sobrenome"
+                        value={lastName}
+                        onChange={e => setLastName(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group controlId="email" bsSize="large">
-                <Form.Label>Email</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                         autoFocus
                         type="email"
@@ -54,6 +78,14 @@ function SignUp() {
                     Cadastrar
                 </Button>
             </Form>
+
+            <SimpleAlertModal
+                title="Oops!"
+                label="Erro ao cadastrar"
+                buttonText="Ok"
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </div>
     );
 }
