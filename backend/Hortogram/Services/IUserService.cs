@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using System;
+using Models;
 using Repositories;
 
 namespace Services
@@ -10,5 +11,9 @@ namespace Services
         bool CreateUser(User user);
 
         User GetByEmail(string email);
+
+        User GetById(Guid id);
+
+        bool UpdateUser(User user);
     }
 }

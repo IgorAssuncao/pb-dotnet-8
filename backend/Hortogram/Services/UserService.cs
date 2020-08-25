@@ -41,5 +41,33 @@ namespace Services
                 return null;
             }
         }
+
+        public User GetById(Guid id)
+        {
+            try
+            {
+                return UserRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public bool UpdateUser(User updatedUser)
+        {
+            try
+            {
+                var outdatedUser = UserRepository.GetById(updatedUser.Id);
+                UserRepository.UpdateUser(outdatedUser, updatedUser);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
     }
 }
