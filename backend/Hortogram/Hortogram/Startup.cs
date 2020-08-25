@@ -23,6 +23,7 @@ namespace Hortogram
 {
     public class Startup
     {
+        private readonly 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -41,6 +42,11 @@ namespace Hortogram
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddCors(options => options.AddPolicy("PublicCors", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
 
             services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
@@ -83,6 +89,8 @@ namespace Hortogram
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("PublicCors");
 
             app.UseAuthentication();
             app.UseAuthorization();
