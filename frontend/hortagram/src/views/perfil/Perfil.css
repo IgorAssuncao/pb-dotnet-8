@@ -1,0 +1,28 @@
+.Perfil {
+    text-align: center;
+}
+
+.infoMaster {
+    display: inline-flex;
+    width: 800px;
+    padding-top: 60px;
+    padding-left: 60px;
+}
+
+.info {
+    text-align: left;
+    padding-left: 40px;
+    align-self: center;
+}
+
+.infoUsername h4 {
+    padding-right: 12px;
+}
+
+.infoUsername {
+    display: inline-flex;
+}
+
+.perfilPhoto {
+    height: 150px;
+}
