@@ -1,22 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 namespace Hortogram
@@ -35,12 +27,21 @@ namespace Hortogram
         {
             services.AddControllers();
 
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DB")));
-            services.AddScoped<IUserContext, UserContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddDbContext<UserContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("DB"))
+            );
 
+            services.AddScoped<UserContext, UserContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddCors(options => options.AddPolicy("PublicCors", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
 
             services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
@@ -53,21 +54,18 @@ namespace Hortogram
 
             var key = Encoding.UTF8.GetBytes(Configuration["JWT:Key"]);
 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = "Bearer";
             })
-                .AddJwtBearer(x =>
+                .AddJwtBearer(options =>
                 {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = false;
-                    x.TokenValidationParameters = new TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidIssuer = "PB8",
+                        ValidAudience = "PB8",
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
                     };
                 });
         }
@@ -83,6 +81,8 @@ namespace Hortogram
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("PublicCors");
 
             app.UseAuthentication();
             app.UseAuthorization();
