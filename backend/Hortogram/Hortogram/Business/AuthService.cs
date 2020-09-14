@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Models;
-using Repositories;
 using Settings;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -36,19 +33,27 @@ namespace Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, Id.ToString())
+                    new Claim(JwtRegisteredClaimNames.UniqueName, Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(3),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(key)),
+                    SecurityAlgorithms.HmacSha256Signature
+                )
             };
-            SecurityToken Token = TokenHandler.CreateToken(TokenDescriptor);
-            return TokenHandler.WriteToken(Token);
+            JwtSecurityToken Token = TokenHandler.CreateJwtSecurityToken(TokenDescriptor);
+            TokenHandler.WriteToken(Token);
+            return Token.RawData;
         }
 
         public AuthenticationReturn Authenticate(string email, string password)
         {
-            var user = UserService.GetByEmail(email);
+            User user = UserService.GetByEmail(email);
             if (user == null)
+                return new AuthenticationReturn { Status = false };
+
+            if (password != user.Password)
                 return new AuthenticationReturn { Status = false };
 
             string token = GenerateToken(user.Id);

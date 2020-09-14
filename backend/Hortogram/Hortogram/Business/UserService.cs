@@ -28,6 +28,22 @@ namespace Services
                 return false;
             }
         }
+        public User CreateUser(string FirstName, string Lastname, string email, string password)
+        {
+            User user = new User(FirstName, Lastname, email, password);
+            user.Id = Guid.NewGuid();
+
+            try
+            {
+                UserRepository.CreateUser(user);
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
 
         public User GetByEmail(string email)
         {
@@ -78,7 +94,7 @@ namespace Services
                 {
                     user.Password = password;
                 }
-                
+
                 UserRepository.UpdateUser(user);
                 return true;
             }

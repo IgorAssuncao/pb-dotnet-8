@@ -1,6 +1,4 @@
-﻿using Repositories;
-
-namespace Services
+﻿namespace Services
 {
     public interface IAuthService
     {

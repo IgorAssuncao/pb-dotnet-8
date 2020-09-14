@@ -1,6 +1,6 @@
-﻿using System;
-using Models;
+﻿using Models;
 using Repositories;
+using System;
 
 namespace Services
 {
@@ -9,6 +9,8 @@ namespace Services
         IUserRepository UserRepository { get; set; }
 
         bool CreateUser(User user);
+
+        User CreateUser(string firstName, string lastName, string email, string password);
 
         User GetByEmail(string email);
 

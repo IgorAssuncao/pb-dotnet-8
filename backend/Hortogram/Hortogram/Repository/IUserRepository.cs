@@ -1,12 +1,12 @@
-﻿using System;
-using Context;
+﻿using Context;
 using Models;
+using System;
 
 namespace Repositories
 {
     public interface IUserRepository
     {
-        UserContext UserDb { get; set; }
+        UserContext Context { get; set; }
 
         void CreateUser(User user);
 
