@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Settings;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Repositories
@@ -22,10 +23,12 @@ namespace Repositories
             ContainerClient.CreateIfNotExists();
         }
 
-        public void UploadFile(Guid userId, Stream imageStream)
+        public string UploadFile(string type, Guid Id, string fileExtension, Stream imageStream)
         {
-            BlobClient = ContainerClient.GetBlobClient($"{userId}-{DateTime.UtcNow}");
+            string now = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+            BlobClient = ContainerClient.GetBlobClient($"{type}-{Id}-{now}.{fileExtension}");
             BlobClient.Upload(imageStream);
+            return BlobClient.Uri.ToString();
         }
     }
 }

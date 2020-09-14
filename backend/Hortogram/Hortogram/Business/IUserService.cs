@@ -8,14 +8,12 @@ namespace Services
     {
         IUserRepository UserRepository { get; set; }
 
-        bool CreateUser(User user);
-
-        User CreateUser(string firstName, string lastName, string email, string password);
+        User CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
         User GetByEmail(string email);
 
         User GetById(Guid id);
 
-        bool UpdateUser(Guid id, string firstName, string lastName, string email, string password);
+        bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
     }
 }

@@ -5,6 +5,6 @@ namespace Services
 {
     public interface IImageService
     {
-        void UploadFile(Guid userId, Stream image);
+        string UploadFile(string type, Guid Id, string fileExtension, byte[] image);
     }
 }

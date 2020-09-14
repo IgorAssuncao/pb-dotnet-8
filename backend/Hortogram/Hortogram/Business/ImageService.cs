@@ -13,9 +13,11 @@ namespace Services
             ImageRepository = imageRepository;
         }
 
-        public void UploadFile(Guid userId, Stream image)
+        public string UploadFile(string type, Guid Id, string fileExtension, byte[] image)
         {
-            ImageRepository.UploadFile(userId, image);
+            Stream imageStream = new MemoryStream(image);
+            string photoUrl = ImageRepository.UploadFile(type, Id, fileExtension, imageStream);
+            return photoUrl;
         }
     }
 }
