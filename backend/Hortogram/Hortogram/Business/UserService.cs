@@ -13,24 +13,9 @@ namespace Services
             UserRepository = userRepository;
         }
 
-        public bool CreateUser(User user)
+        public User CreateUser(Guid Id, string FirstName, string Lastname, string email, string password, string photoUrl, bool status)
         {
-            user.Id = Guid.NewGuid();
-
-            try
-            {
-                UserRepository.CreateUser(user);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-        }
-        public User CreateUser(string FirstName, string Lastname, string email, string password)
-        {
-            User user = new User(FirstName, Lastname, email, password);
+            User user = new User(Id, FirstName, Lastname, email, password, photoUrl, status);
             user.Id = Guid.NewGuid();
 
             try
@@ -72,7 +57,7 @@ namespace Services
         }
 
 
-        public bool UpdateUser(Guid id, string firstName, string lastName, string email, string password)
+        public bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl)
         {
             try
             {
@@ -91,6 +76,10 @@ namespace Services
                     user.Email = email;
                 }
                 if (!String.IsNullOrEmpty(password))
+                {
+                    user.Password = password;
+                }
+                if (!String.IsNullOrEmpty(photoUrl))
                 {
                     user.Password = password;
                 }

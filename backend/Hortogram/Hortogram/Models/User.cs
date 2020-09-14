@@ -14,10 +14,19 @@ namespace Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string PhotoURL { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
 
         public User()
         {
+        }
+
+        public User(string _FirstName, string _Lastname, string _Email, string _Password, string _PhotoURL)
+        {
+            FirstName = _FirstName;
+            Lastname = _Lastname;
+            Email = _Email;
+            Password = _Password;
+            PhotoURL = _PhotoURL;
         }
 
         public User(string _FirstName, string _Lastname, string _Email, string _Password, string _PhotoURL, bool _Status)

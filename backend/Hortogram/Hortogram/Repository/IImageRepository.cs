@@ -5,6 +5,6 @@ namespace Repositories
 {
     public interface IImageRepository
     {
-        void UploadFile(Guid userId, Stream imageStream);
+        string UploadFile(string type, Guid Id, string fileExtension, Stream imageStream);
     }
 }
