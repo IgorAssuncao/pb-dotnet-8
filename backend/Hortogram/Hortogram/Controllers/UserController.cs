@@ -1,5 +1,4 @@
-﻿using Hortogram.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
@@ -26,7 +25,7 @@ namespace Hortogram.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+                return new string[] { "value1", "value2" };
         }
 
         // GET: api/User/5
@@ -93,8 +92,16 @@ namespace Hortogram.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+            User user = UserService.GetById(id);
+
+            bool result = UserService.RemoveUser(user);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 
-namespace Hortogram.Models
+namespace Models
 {
     public class UserRequest
     {
