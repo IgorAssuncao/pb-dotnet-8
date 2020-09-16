@@ -130,6 +130,22 @@ namespace Services
             }
         }
 
+        public bool RemoveUser(User user)
+        {
+            try
+            {
+                user.Status = false;
+
+                UserRepository.UpdateUser(user);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
         public List<UserFollowersResponse> GetFollowers(Guid userId)
         {
             try
@@ -184,7 +200,6 @@ namespace Services
 
                 UsersFollowers userFollower = new UsersFollowers { UserId = userId, FollowerId = followerId };
                 UserRepository.RemoveFollower(userFollower);
-                return true;
             }
             catch (Exception e)
             {

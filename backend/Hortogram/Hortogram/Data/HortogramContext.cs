@@ -4,12 +4,15 @@ using Models;
 
 namespace Context
 {
-    public class UserContext : DbContext
+    public class HortogramContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options) : base(options) {}
+        public HortogramContext(DbContextOptions<HortogramContext> options) : base(options) {}
 
         public DbSet<User> UserDbSet { get; set; }
+
         public DbSet<UsersFollowers> UsersFollowers { get; set; }
+
+        public DbSet<Post> PostDbSet { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

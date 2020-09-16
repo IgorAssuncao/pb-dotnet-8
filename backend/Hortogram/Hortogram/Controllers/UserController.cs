@@ -1,5 +1,4 @@
-﻿using Hortogram.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
@@ -91,11 +90,18 @@ namespace Hortogram.Controllers
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5:w
-
+        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+            User user = UserService.GetById(id);
+
+            bool result = UserService.RemoveUser(user);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
         }
 
         [HttpGet]

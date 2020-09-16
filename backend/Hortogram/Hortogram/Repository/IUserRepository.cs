@@ -9,7 +9,7 @@ namespace Repositories
 {
     public interface IUserRepository
     {
-        UserContext Context { get; set; }
+        HortogramContext Context { get; set; }
 
         void CreateUser(User user);
 

@@ -20,6 +20,8 @@ namespace Services
 
         bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
 
+        bool RemoveUser(User user);
+
         List<UserFollowersResponse> GetFollowers(Guid userId);
 
         bool AddFollower(Guid userId, Guid followerId);
