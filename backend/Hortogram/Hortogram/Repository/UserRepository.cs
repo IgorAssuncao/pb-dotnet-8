@@ -7,9 +7,9 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public UserContext Context { get; set; }
+        public HortogramContext Context { get; set; }
 
-        public UserRepository(UserContext context)
+        public UserRepository(HortogramContext context)
         {
             Context = context;
         }
