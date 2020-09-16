@@ -27,20 +27,23 @@ namespace Services
             TokenHandler = new JwtSecurityTokenHandler();
         }
 
-        private string GenerateToken(Guid Id)
+        private string GenerateToken(Guid Id, string email)
         {
             SecurityTokenDescriptor TokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(JwtRegisteredClaimNames.UniqueName, Id.ToString())
+                    new Claim(JwtRegisteredClaimNames.UniqueName, Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(
                         Encoding.ASCII.GetBytes(key)),
                     SecurityAlgorithms.HmacSha256Signature
-                )
+                ),
+                Audience = "PB8",
+                Issuer = "PB8"
             };
             JwtSecurityToken Token = TokenHandler.CreateJwtSecurityToken(TokenDescriptor);
             TokenHandler.WriteToken(Token);
@@ -56,7 +59,7 @@ namespace Services
             if (password != user.Password)
                 return new AuthenticationReturn { Status = false };
 
-            string token = GenerateToken(user.Id);
+            string token = GenerateToken(user.Id, user.Email);
 
             return new AuthenticationReturn { Status = true, Token = token, Id = user.Id };
         }

@@ -23,7 +23,7 @@ namespace Hortogram.Controllers
             if (!auth.Status)
                 return BadRequest(auth);
 
-            return Ok(auth);
+            return Ok(new { auth.Token });
         }
     }
 

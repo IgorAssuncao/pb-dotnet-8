@@ -1,6 +1,8 @@
-﻿using Models;
+﻿using Hortogram.Mappings;
+using Models;
 using Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Services
 {
@@ -8,12 +10,20 @@ namespace Services
     {
         IUserRepository UserRepository { get; set; }
 
-        User CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
+        UserResponse CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
-        User GetByEmail(string email);
+        UserResponse GetByEmail(string email);
 
-        User GetById(Guid id);
+        UserResponse GetById(Guid id);
+
+        List<UserResponse> GetAll();
 
         bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
+
+        List<UserFollowersResponse> GetFollowers(Guid userId);
+
+        bool AddFollower(Guid userId, Guid followerId);
+
+        bool RemoveFollower(Guid userId, Guid followerId);
     }
 }

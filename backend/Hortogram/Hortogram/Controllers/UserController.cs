@@ -24,16 +24,16 @@ namespace Hortogram.Controllers
 
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(UserService.GetAll());
         }
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "GetUser")]
-        public string Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            return "value";
+            return Ok(UserService.GetById(id));
         }
 
         // POST: api/User
@@ -91,10 +91,44 @@ namespace Hortogram.Controllers
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/ApiWithActions/5:w
+
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet]
+        [Route("{id}/followers")]
+        public IActionResult GetFollowers([FromRoute] Guid id)
+        {
+            return Ok(UserService.GetFollowers(id));
+        }
+
+        [HttpPut]
+        [Route("{id}/followers")]
+        public IActionResult AddFollower([FromRoute] Guid id, [FromBody] FollowerRequest follower)
+        {
+            // Guid FollowerId = Guid.Parse(followerId);
+            bool result = UserService.AddFollower(id, follower.Id);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}/followers")]
+        public IActionResult RemoveFollower([FromQuery] Guid id, [FromBody] string followerId)
+        {
+            Guid FollowerId = Guid.Parse(followerId);
+            bool result = UserService.AddFollower(id, FollowerId);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
         }
     }
 }
