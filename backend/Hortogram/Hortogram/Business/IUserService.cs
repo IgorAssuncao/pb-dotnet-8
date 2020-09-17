@@ -14,6 +14,8 @@ namespace Services
 
         UserResponse GetByEmail(string email);
 
+        User GetUserById(Guid id);
+
         UserResponse GetById(Guid id);
 
         List<UserResponse> GetAll();

@@ -57,6 +57,20 @@ namespace Services
             }
         }
 
+        public User GetUserById(Guid id)
+        {
+            try
+            {
+                User user = UserRepository.GetById(id);
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
         public UserResponse GetById(Guid id)
         {
             try
@@ -200,6 +214,7 @@ namespace Services
 
                 UsersFollowers userFollower = new UsersFollowers { UserId = userId, FollowerId = followerId };
                 UserRepository.RemoveFollower(userFollower);
+                return true;
             }
             catch (Exception e)
             {
