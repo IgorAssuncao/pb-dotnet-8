@@ -208,7 +208,7 @@ namespace Services
             try
             {
                 User user = UserRepository.GetById(userId);
-                User follower = UserRepository.GetById(userId);
+                User follower = UserRepository.GetById(followerId);
                 if (user == null || follower == null)
                     return false;
 
