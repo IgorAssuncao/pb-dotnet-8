@@ -10,5 +10,7 @@ namespace Context
         public DbSet<User> UserDbSet { get; set; }
 
         public DbSet<Post> PostDbSet { get; set; }
+
+        public DbSet<Comment> CommentDbSet { get; set; }
     }
 }

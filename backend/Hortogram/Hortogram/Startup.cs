@@ -27,11 +27,11 @@ namespace Hortogram
         {
             services.AddControllers();
 
-            services.AddDbContext<UserContext>(
+            services.AddDbContext<HortogramContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DB"))
             );
 
-            services.AddScoped<UserContext, UserContext>();
+            services.AddScoped<HortogramContext, HortogramContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IUserService, UserService>();
