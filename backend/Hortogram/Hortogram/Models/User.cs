@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hortogram.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +17,7 @@ namespace Models
         public string Password { get; set; }
         public string PhotoURL { get; set; }
         public bool? Status { get; set; }
+        public virtual IList<UsersFollowers> Followers { get; set; }
 
         public User()
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Hortogram.Mappings;
+using Hortogram.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
@@ -23,16 +25,16 @@ namespace Hortogram.Controllers
 
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-                return new string[] { "value1", "value2" };
+            return Ok(UserService.GetAll());
         }
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "GetUser")]
-        public string Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            return "value";
+            return Ok(UserService.GetById(id));
         }
 
         // POST: api/User
@@ -54,7 +56,7 @@ namespace Hortogram.Controllers
 
             string photoUrl = ImageService.UploadFile("profile", Id, fileExtension, res);
 
-            User userRes = UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
+            UserResponse userRes = UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
 
             if (userRes == null)
                 return BadRequest();
@@ -66,7 +68,7 @@ namespace Hortogram.Controllers
         [HttpPut("{id}")]
         public IActionResult Put([FromQuery] Guid id, [FromBody] string firstName, string lastName, string email, string password, string photoUrl)
         {
-            User userFound = UserService.GetById(id);
+            User userFound = UserService.GetUserById(id);
             User newUser = new User();
 
             newUser.Id = id;
@@ -94,9 +96,40 @@ namespace Hortogram.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            User user = UserService.GetById(id);
+            User user = UserService.GetUserById(id);
 
             bool result = UserService.RemoveUser(user);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id}/followers")]
+        public IActionResult GetFollowers([FromRoute] Guid id)
+        {
+            return Ok(UserService.GetFollowers(id));
+        }
+
+        [HttpPut]
+        [Route("{id}/followers")]
+        public IActionResult AddFollower([FromRoute] Guid id, [FromBody] FollowerRequest follower)
+        {
+            bool result = UserService.AddFollower(id, follower.Id);
+
+            if (!result)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}/followers")]
+        public IActionResult RemoveFollower([FromRoute] Guid id, [FromBody] FollowerRequest follower)
+        {
+            bool result = UserService.RemoveFollower(id, follower.Id);
 
             if (!result)
                 return BadRequest();
