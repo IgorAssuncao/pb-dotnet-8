@@ -4,24 +4,47 @@ import "./Perfil.css";
 import SimpleInputModal from "../../components/SimpleInputModal";
 import SimpleAlertModal from "../../components/SimpleAlertModal";
 import api from '../../services/api'
+import Loading from "../../components/Loading";
+import PerfilPosts from "../../components/PerfilPosts";
 
 function Perfil() {
     const [editPefilModalShow, setEditPefilModalShow] = React.useState(false);
     const [alertModalShow, setAlertModalShow] = React.useState(false);
     const [name, setName] = useState("");
+    const [componentIsMounted, setComponentIsMounted] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     async function getUser() {
+        setComponentIsMounted(true)
+        setLoading(true)
         const id = localStorage.getItem('id');
         api.get(`/User/${id}`)
         .then(function (response) {
             setName("Marlon")
+            getPosts()
         }).catch(function (error) {
             setAlertModalShow(true)
+            setLoading(false)
         }); 
     }
     
+    async function getPosts() {
+        setComponentIsMounted(true)
+        const id = localStorage.getItem('id');
+        api.get(`/Posts/${id}`)
+        .then(function (response) {
+            setName("Marlon")
+        }).catch(function (error) {
+            setAlertModalShow(true)
+        }).finally(function () {
+            setLoading(false)
+        }); 
+    }
+
     useEffect(() => {
-        getUser();
+        if (!componentIsMounted) {
+            getUser();
+        }
     });
 
     return (
@@ -30,23 +53,29 @@ function Perfil() {
                 <Image className="perfilPhoto" src="assets/quadrado_preto.png" roundedCircle />
                 <div className="info">
                     <div className="infoUsername">
-                        <h4>{name}</h4>
+                        <h4>meu usuário {name}</h4>
                         <Button variant="outline-primary" size="sm" onClick={() => setEditPefilModalShow(true)}>
                             Editar Usuário
                         </Button>
                     </div>
                     <Row>
                         <Col xs={4} md={3}>
-                            <p><b>0</b> Publicações</p>
+                            <p><b>1000</b> Publicações</p>
                         </Col>
                         <Col xs={4} md={3}>
-                            <p><b>0</b> Seguidores</p>
+                            <p><b>1000</b> Seguidores</p>
                         </Col>
                         <Col xs={4} md={3}>
-                            <p><b>0</b> Seguindo</p>
+                            <p><b>1000</b> Seguindo</p>
                         </Col>
                     </Row>
                 </div>
+            </div>
+
+            <hr />
+
+            <div className="posts">
+                <PerfilPosts />
             </div>
 
             <SimpleInputModal
@@ -65,6 +94,7 @@ function Perfil() {
                 show={alertModalShow}
                 onHide={() => setAlertModalShow(false)}
             />
+            <Loading loading={loading} />
         </div>
     );
 }
