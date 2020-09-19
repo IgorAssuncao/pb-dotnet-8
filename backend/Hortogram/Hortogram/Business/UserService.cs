@@ -42,6 +42,20 @@ namespace Services
             }
         }
 
+        public User GetUserByEmail(string email)
+        {
+            try
+            {
+                User user = UserRepository.GetByEmail(email);
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
         public UserResponse GetByEmail(string email)
         {
             try

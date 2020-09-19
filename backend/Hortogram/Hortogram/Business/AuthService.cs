@@ -52,7 +52,7 @@ namespace Services
 
         public AuthenticationReturn Authenticate(string email, string password)
         {
-            User user = UserService.GetByEmail(email);
+            User user = UserService.GetUserByEmail(email);
             if (user == null)
                 return new AuthenticationReturn { Status = false };
 

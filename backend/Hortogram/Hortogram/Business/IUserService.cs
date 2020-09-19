@@ -12,6 +12,8 @@ namespace Services
 
         UserResponse CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
+        User GetUserByEmail(string email);
+
         UserResponse GetByEmail(string email);
 
         User GetUserById(Guid id);

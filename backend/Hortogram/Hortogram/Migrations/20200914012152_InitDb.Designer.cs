@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hortogram.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(HortogramContext))]
     [Migration("20200914012152_InitDb")]
     partial class InitDb
     {
