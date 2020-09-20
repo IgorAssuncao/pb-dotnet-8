@@ -12,9 +12,11 @@ namespace Models
 
         [ForeignKey("user_id")]
         public Guid UserId { get; set; }
+        public virtual User User { get; set; }
 
         [ForeignKey("post_id")]
         public Guid PostId { get; set; }
+        public virtual Post Post { get; set; }
 
         public string Content { get; set; }
 

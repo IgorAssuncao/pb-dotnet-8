@@ -14,10 +14,10 @@ namespace Models
 
         [ForeignKey("user_id")]
         public Guid UserId { get; set; }
-
+        public virtual User User { get; set; }
         public string PhotoUrl { get; set; }
         public string Description { get; set; }
-        public virtual List<PostComment> Comments { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public Post()
         {

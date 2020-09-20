@@ -38,7 +38,7 @@ namespace Repositories
             return Context.CommentDbSet.FirstOrDefault(comment => comment.Id == id);
         }
 
-        public List<Comment> GetAllCommentsOfPost(Guid postId)
+        public List<Comment> GetAllCommentsOfAPost(Guid postId)
         {
             return Context.CommentDbSet.Where(comment => comment.PostId == postId).ToList();
         }
