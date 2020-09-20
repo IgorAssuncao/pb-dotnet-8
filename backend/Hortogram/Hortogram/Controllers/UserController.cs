@@ -58,8 +58,8 @@ namespace Hortogram.Controllers
 
             UserResponse userRes = UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
 
-            if (userRes == null)
-                return BadRequest();
+            //if (userRes == null)
+            //    return BadRequest();
 
             return Ok();
         }
