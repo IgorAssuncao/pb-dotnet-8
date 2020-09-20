@@ -18,6 +18,8 @@ namespace Models
         public string PhotoURL { get; set; }
         public bool? Status { get; set; }
         public virtual IList<UsersFollowers> Followers { get; set; }
+        public virtual IList<Post> Posts { get; set; }
+        public virtual IList<Comment> Comments { get; set; }
 
         public User()
         {
