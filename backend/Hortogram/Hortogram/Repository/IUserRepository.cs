@@ -12,19 +12,19 @@ namespace Repositories
     {
         HortogramContext Context { get; set; }
 
-        void CreateUser(User user);
+        Task CreateUser(User user);
 
         void UpdateUser(User user);
 
-        User GetByEmail(string email);
+        Task<User> GetByEmail(string email);
 
-        User GetById(Guid id);
+        Task<User> GetById(Guid id);
 
-        List<User> GetAll();
+        Task<List<User>> GetAll();
 
-        List<UserFollowersResponse> GetFollowers(User user);
+        Task<List<UserFollowersResponse>> GetFollowers(User user);
 
-        void AddFollower(UsersFollowers userFollower);
+        Task AddFollower(UsersFollowers userFollower);
 
         void RemoveFollower(UsersFollowers userFollower);
     }

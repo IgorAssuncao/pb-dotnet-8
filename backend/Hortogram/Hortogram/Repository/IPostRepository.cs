@@ -1,6 +1,7 @@
 ﻿using Context;
 using Models;
 using System;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -8,12 +9,12 @@ namespace Repositories
     {
         HortogramContext Context { get; set; }
 
-        void CreatePost(Post post);
+        Task CreatePost(Post post);
 
-        void UpdatePost(Post post);
+        Task UpdatePost(Post post);
 
-        void RemovePost(Post post);
+        Task RemovePost(Post post);
 
-        Post GetById(Guid id);
+        Task<Post> GetById(Guid id);
     }
 }
