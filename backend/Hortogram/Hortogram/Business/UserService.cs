@@ -29,17 +29,17 @@ namespace Services
                 Status = status
             };
 
-            try
-            {
+            //try
+            //{
                 UserRepository.CreateUser(user);
                 UserResponse userResponse = Utils.ConvertUserToUserResponse(user);
                 return userResponse;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    return null;
+            //}
         }
 
         public User GetUserByEmail(string email)
