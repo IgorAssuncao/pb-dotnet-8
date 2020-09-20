@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Threading.Tasks;
 
 namespace Hortogram.Controllers
 {
@@ -16,14 +17,14 @@ namespace Hortogram.Controllers
 
         // POST: api/Auth
         [HttpPost]
-        public IActionResult Post([FromBody] LoginAttributes loginAttributes)
+        public async Task<IActionResult> Post([FromBody] LoginAttributes loginAttributes)
         {
             //AuthService
-            AuthenticationReturn auth = AuthService.Authenticate(loginAttributes.Email, loginAttributes.Password);
+            AuthenticationReturn auth = await AuthService.Authenticate(loginAttributes.Email, loginAttributes.Password);
             if (!auth.Status)
                 return BadRequest(auth);
 
-            return Ok(auth);
+            return Ok(new { token = auth.Token, id = auth.Id });
         }
     }
 

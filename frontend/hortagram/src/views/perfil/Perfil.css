@@ -2,16 +2,21 @@
     text-align: center;
 }
 
+hr {
+    width: 800px;
+}
+
 .infoMaster {
     display: inline-flex;
     width: 800px;
     padding-top: 60px;
     padding-left: 60px;
+    padding-bottom: 50px;
 }
 
 .info {
     text-align: left;
-    padding-left: 40px;
+    padding-left: 100px;
     align-self: center;
 }
 
@@ -20,9 +25,15 @@
 }
 
 .infoUsername {
+    padding-bottom: 20px;
     display: inline-flex;
 }
 
 .perfilPhoto {
     height: 150px;
+}
+
+.posts {
+    width: 800px;
+    display: inline-flex;
 }

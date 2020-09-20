@@ -1,6 +1,7 @@
 ﻿using Repositories;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -13,10 +14,10 @@ namespace Services
             ImageRepository = imageRepository;
         }
 
-        public string UploadFile(string type, Guid Id, string fileExtension, byte[] image)
+        public async Task<string> UploadFile(string type, Guid Id, string fileExtension, byte[] image)
         {
             Stream imageStream = new MemoryStream(image);
-            string photoUrl = ImageRepository.UploadFile(type, Id, fileExtension, imageStream);
+            string photoUrl = await ImageRepository.UploadFile(type, Id, fileExtension, imageStream);
             return photoUrl;
         }
     }

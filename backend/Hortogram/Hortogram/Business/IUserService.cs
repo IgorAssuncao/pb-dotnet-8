@@ -1,6 +1,9 @@
-﻿using Models;
+﻿using Hortogram.Mappings;
+using Models;
 using Repositories;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -8,14 +11,26 @@ namespace Services
     {
         IUserRepository UserRepository { get; set; }
 
-        User CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
+        Task<UserResponse> CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
-        User GetByEmail(string email);
+        Task<User> GetUserByEmail(string email);
 
-        User GetById(Guid id);
+        Task<UserResponse> GetByEmail(string email);
 
-        bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
+        Task<User> GetUserById(Guid id);
 
-        bool RemoveUser(User user);
+        Task<UserResponse> GetById(Guid id);
+
+        Task<List<UserResponse>> GetAll();
+
+        Task<bool> UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
+
+        Task<bool> RemoveUser(User user);
+
+        Task<List<UserFollowersResponse>> GetFollowers(Guid userId);
+
+        Task<bool> AddFollower(Guid userId, Guid followerId);
+
+        Task<bool> RemoveFollower(Guid userId, Guid followerId);
     }
 }

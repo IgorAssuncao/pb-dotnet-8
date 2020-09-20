@@ -1,6 +1,10 @@
 ﻿using Context;
+using Hortogram.Mappings;
+using Hortogram.Models;
 using Models;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -8,12 +12,20 @@ namespace Repositories
     {
         HortogramContext Context { get; set; }
 
-        void CreateUser(User user);
+        Task CreateUser(User user);
 
         void UpdateUser(User user);
 
-        User GetByEmail(string email);
+        Task<User> GetByEmail(string email);
 
-        User GetById(Guid id);
+        Task<User> GetById(Guid id);
+
+        Task<List<User>> GetAll();
+
+        Task<List<UserFollowersResponse>> GetFollowers(User user);
+
+        Task AddFollower(UsersFollowers userFollower);
+
+        void RemoveFollower(UsersFollowers userFollower);
     }
 }

@@ -4,6 +4,7 @@ using Settings;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -23,11 +24,11 @@ namespace Repositories
             ContainerClient.CreateIfNotExists();
         }
 
-        public string UploadFile(string type, Guid Id, string fileExtension, Stream imageStream)
+        public async Task<string> UploadFile(string type, Guid Id, string fileExtension, Stream imageStream)
         {
             string now = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
             BlobClient = ContainerClient.GetBlobClient($"{type}-{Id}-{now}.{fileExtension}");
-            BlobClient.Upload(imageStream);
+            await BlobClient.UploadAsync(imageStream);
             return BlobClient.Uri.ToString();
         }
     }
