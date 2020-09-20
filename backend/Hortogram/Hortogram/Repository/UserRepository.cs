@@ -1,11 +1,11 @@
 ﻿using Context;
 using Hortogram.Mappings;
 using Hortogram.Models;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Repositories
@@ -19,7 +19,7 @@ namespace Repositories
             Context = context;
         }
 
-        public async void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
             try
             {
@@ -28,39 +28,48 @@ namespace Repositories
             }
             catch (Exception e)
             {
-                
+                Console.WriteLine(e);
+                throw;
             }
         }
 
         public void UpdateUser(User user)
         {
-            Context.UserDbSet.Update(user);
-            Context.SaveChanges();
+            try
+            {
+                Context.UserDbSet.Update(user);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public User GetByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
-            return Context.UserDbSet.FirstOrDefault(user => user.Email == email);
+            return await Context.UserDbSet.FirstOrDefaultAsync(user => user.Email == email);
         }
 
-        public User GetById(Guid id)
+        public async Task<User> GetById(Guid id)
         {
-            return Context.UserDbSet.FirstOrDefault(user => user.Id == id);
+            return await Context.UserDbSet.FirstOrDefaultAsync(user => user.Id == id);
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return Context.UserDbSet.ToList();
+            return await Context.UserDbSet.ToListAsync();
         }
 
-        public List<UserFollowersResponse> GetFollowers(User user)
+        public async Task<List<UserFollowersResponse>> GetFollowers(User user)
         {
-            user.Followers = Context.UsersFollowers.Where(uf => uf.UserId == user.Id).ToList();
+            user.Followers = await Context.UsersFollowers.Where(uf => uf.UserId == user.Id).ToListAsync();
 
             List<UserFollowersResponse> followers = new List<UserFollowersResponse>();
 
             foreach(UsersFollowers u in user.Followers) {
-                User userFound = Context.UserDbSet.FirstOrDefault(user => user.Id == u.FollowerId);
+                User userFound = await Context.UserDbSet.FirstOrDefaultAsync(user => user.Id == u.FollowerId);
                 followers.Add(new UserFollowersResponse {
                     Id = userFound.Id,
                     FirstName = userFound.FirstName,
@@ -74,16 +83,32 @@ namespace Repositories
             return followers;
         }
 
-        public void AddFollower(UsersFollowers userFollower)
+        public async Task AddFollower(UsersFollowers userFollower)
         {
-            Context.UsersFollowers.Add(userFollower);
-            Context.SaveChanges();
+            try
+            {
+                await Context.UsersFollowers.AddAsync(userFollower);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public void RemoveFollower(UsersFollowers userFollower)
         {
-            Context.UsersFollowers.Remove(userFollower);
-            Context.SaveChanges();
+            try
+            {
+                Context.UsersFollowers.Remove(userFollower);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

@@ -13,24 +13,24 @@ namespace Services
 
         Task<UserResponse> CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
-        User GetUserByEmail(string email);
+        Task<User> GetUserByEmail(string email);
 
-        UserResponse GetByEmail(string email);
+        Task<UserResponse> GetByEmail(string email);
 
-        User GetUserById(Guid id);
+        Task<User> GetUserById(Guid id);
 
-        UserResponse GetById(Guid id);
+        Task<UserResponse> GetById(Guid id);
 
-        List<UserResponse> GetAll();
+        Task<List<UserResponse>> GetAll();
 
-        bool UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
+        Task<bool> UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl);
 
-        bool RemoveUser(User user);
+        Task<bool> RemoveUser(User user);
 
-        List<UserFollowersResponse> GetFollowers(Guid userId);
+        Task<List<UserFollowersResponse>> GetFollowers(Guid userId);
 
-        bool AddFollower(Guid userId, Guid followerId);
+        Task<bool> AddFollower(Guid userId, Guid followerId);
 
-        bool RemoveFollower(Guid userId, Guid followerId);
+        Task<bool> RemoveFollower(Guid userId, Guid followerId);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Context;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Repositories
@@ -15,27 +17,51 @@ namespace Repositories
             Context = context;
         }
 
-        public void CreatePost(Post post)
+        public async Task CreatePost(Post post)
         {
-            Context.PostDbSet.Add(post);
-            Context.SaveChanges();
+            try
+            {
+                await Context.PostDbSet.AddAsync(post);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public void UpdatePost(Post post)
+        public async Task UpdatePost(Post post)
         {
-            Context.PostDbSet.Update(post);
-            Context.SaveChanges();
+            try
+            {
+                Context.PostDbSet.Update(post);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public void RemovePost(Post post)
+        public async Task RemovePost(Post post)
         {
-            Context.PostDbSet.Remove(post);
-            Context.SaveChanges();
+            try
+            {
+                Context.PostDbSet.Remove(post);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public Post GetById(Guid id)
+        public async Task<Post> GetById(Guid id)
         {
-            return Context.PostDbSet.FirstOrDefault(post => post.Id == id);
+            return await Context.PostDbSet.FirstOrDefaultAsync(post => post.Id == id);
         }
     }
 }

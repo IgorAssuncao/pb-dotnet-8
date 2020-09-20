@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Models;
 using Repositories;
 
@@ -8,12 +9,12 @@ namespace Services
     {
         IPostRepository PostRepository { get; set; }
 
-        Post CreatePost(Guid Id, Guid UserId, string photoUrl, string description);
+        Task<Post> CreatePost(Guid Id, Guid UserId, string photoUrl, string description);
 
-        Post GetById(Guid id);
+        Task<Post> GetById(Guid id);
 
-        bool UpdatePost(Guid id, string photoUrl, string description);
+        Task<bool> UpdatePost(Guid id, string photoUrl, string description);
 
-        bool RemovePost(Guid id);
+        Task<bool> RemovePost(Guid id);
     }
 }

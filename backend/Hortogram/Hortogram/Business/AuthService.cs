@@ -6,6 +6,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -50,9 +51,9 @@ namespace Services
             return Token.RawData;
         }
 
-        public AuthenticationReturn Authenticate(string email, string password)
+        public async Task<AuthenticationReturn> Authenticate(string email, string password)
         {
-            User user = UserService.GetUserByEmail(email);
+            User user = await UserService.GetUserByEmail(email);
             if (user == null)
                 return new AuthenticationReturn { Status = false };
 
@@ -63,12 +64,5 @@ namespace Services
 
             return new AuthenticationReturn { Status = true, Token = token, Id = user.Id };
         }
-    }
-
-    public class AuthenticationReturn
-    {
-        public bool Status { get; set; }
-        public string Token { get; set; }
-        public Guid Id { get; set; }
     }
 }

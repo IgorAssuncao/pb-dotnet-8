@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Hortogram.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,21 +41,13 @@ namespace Hortogram.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromQuery] Guid UserId,[FromForm] PostRequest postReq)
         {
-            byte[] res = new byte[] { 0 };
-            string fileExtension = "";
-            if (postReq.ImageBase64 != null)
-            {
-                string[] imageBase64Splitted = postReq.ImageBase64.Split(',');
-                fileExtension = imageBase64Splitted[0].Split(':')[1].Split(';')[0].Split('/')[1];
-                string imageBase64 = imageBase64Splitted[1];
-                res = Convert.FromBase64String(imageBase64);
-            }
-
             Guid Id = Guid.NewGuid();
 
-            string photoUrl = await ImageService.UploadFile("post_picture", Id, fileExtension, res);
+            ImageProperties imageProperties = Utils.ConvertImageBase64StringToByteArr(postReq.ImageBase64);
 
-            Post postRes = PostService.CreatePost(Id, UserId, postReq.Description, photoUrl);
+            string photoUrl = await ImageService.UploadFile("post_picture", Id, imageProperties.FileExtension, imageProperties.ImageBytes);
+
+            Post postRes = await PostService.CreatePost(Id, UserId, postReq.Description, photoUrl);
 
             if (postRes == null)
                 return BadRequest();

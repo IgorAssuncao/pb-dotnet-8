@@ -1,6 +1,7 @@
 ﻿using Models;
 using Repositories;
 using System;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -13,40 +14,24 @@ namespace Services
             PostRepository = postRepository;
         }
 
-        public Post CreatePost(Guid id, Guid userId, string photoUrl, string description)
+        public async Task<Post> CreatePost(Guid id, Guid userId, string photoUrl, string description)
         {
             Post post = new Post(id, userId, photoUrl, description);
 
-            try
-            {
-                PostRepository.CreatePost(post);
-                return post;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+            await PostRepository.CreatePost(post);
+            return post;
         }
 
-        public Post GetById(Guid id)
+        public async Task<Post> GetById(Guid id)
+        {
+            return await PostRepository.GetById(id);
+        }
+
+        public async Task<bool> UpdatePost(Guid id, string photoUrl, string description)
         {
             try
             {
-                return PostRepository.GetById(id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
-        }
-
-        public bool UpdatePost(Guid id, string photoUrl, string description)
-        {
-            try
-            {
-                var post = PostRepository.GetById(id);
+                var post = await PostRepository.GetById(id);
 
                 if (!String.IsNullOrEmpty(photoUrl))
                 {
@@ -57,7 +42,7 @@ namespace Services
                     post.Description = description;
                 }
 
-                PostRepository.UpdatePost(post);
+                await PostRepository.UpdatePost(post);
                 return true;
             }
             catch (Exception e)
@@ -67,13 +52,13 @@ namespace Services
             }
         }
 
-        public bool RemovePost(Guid id)
+        public async Task<bool> RemovePost(Guid id)
         {
             try
             {
-                var post = PostRepository.GetById(id);
+                var post = await PostRepository.GetById(id);
 
-                PostRepository.RemovePost(post);
+                await PostRepository.RemovePost(post);
                 return true;
             }
             catch (Exception e)
