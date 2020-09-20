@@ -14,6 +14,8 @@ namespace Context
 
         public DbSet<Post> PostDbSet { get; set; }
 
+        public DbSet<Comment> CommentDbSet { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UsersFollowers>().HasKey(entity => new { entity.UserId, entity.FollowerId });
