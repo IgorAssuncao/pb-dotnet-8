@@ -37,7 +37,7 @@ namespace Services
                     new Claim(JwtRegisteredClaimNames.UniqueName, Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, email)
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMonths(1),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(
                         Encoding.ASCII.GetBytes(key)),
