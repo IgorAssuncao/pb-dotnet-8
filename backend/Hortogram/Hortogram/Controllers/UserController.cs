@@ -102,9 +102,9 @@ namespace Hortogram.Controllers
 
         [HttpGet]
         [Route("{id}/followers")]
-        public IActionResult GetFollowers([FromRoute] Guid id)
+        public async Task<IActionResult> GetFollowers([FromRoute] Guid id)
         {
-            return Ok(UserService.GetFollowers(id));
+            return Ok(await UserService.GetFollowers(id));
         }
 
         [HttpPut]
