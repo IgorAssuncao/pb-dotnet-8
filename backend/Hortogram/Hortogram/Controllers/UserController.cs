@@ -6,6 +6,7 @@ using Models;
 using Services;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hortogram.Controllers
 {
@@ -40,7 +41,7 @@ namespace Hortogram.Controllers
         // POST: api/User
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Post([FromForm] UserRequest userReq)
+        public async Task<IActionResult> Post([FromForm] UserRequest userReq)
         {
             byte[] res = new byte[] { 0 };
             string fileExtension = "";
@@ -54,9 +55,9 @@ namespace Hortogram.Controllers
 
             Guid Id = Guid.NewGuid();
 
-            string photoUrl = ImageService.UploadFile("profile", Id, fileExtension, res);
+            string photoUrl = await ImageService.UploadFile("profile", Id, fileExtension, res);
 
-            UserResponse userRes = UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
+            UserResponse userRes = await UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
 
             //if (userRes == null)
             //    return BadRequest();

@@ -3,6 +3,7 @@ using Models;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -10,7 +11,7 @@ namespace Services
     {
         IUserRepository UserRepository { get; set; }
 
-        UserResponse CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
+        Task<UserResponse> CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
         User GetUserByEmail(string email);
 

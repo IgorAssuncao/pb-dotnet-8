@@ -5,6 +5,7 @@ using Models;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -17,7 +18,7 @@ namespace Services
             UserRepository = userRepository;
         }
 
-        public UserResponse CreateUser(Guid Id, string FirstName, string Lastname, string email, string password, string photoUrl, bool status)
+        public async Task<UserResponse> CreateUser(Guid Id, string FirstName, string Lastname, string email, string password, string photoUrl, bool status)
         {
             User user = new User { 
                 Id = Id,

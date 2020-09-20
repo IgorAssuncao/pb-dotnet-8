@@ -5,6 +5,8 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -17,10 +19,17 @@ namespace Repositories
             Context = context;
         }
 
-        public void CreateUser(User user)
+        public async void CreateUser(User user)
         {
-            Context.UserDbSet.Add(user);
-            Context.SaveChanges();
+            try
+            {
+                await Context.UserDbSet.AddAsync(user);
+                Context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
 
         public void UpdateUser(User user)
