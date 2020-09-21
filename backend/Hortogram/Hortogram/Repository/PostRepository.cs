@@ -18,6 +18,11 @@ namespace Repositories
             Context = context;
         }
 
+        public async Task<List<Post>> BuildFeed(Guid userId)
+        {
+            return await Context.PostDbSet.Where(post => post.UserId != userId).ToListAsync();
+        }
+
         public async Task CreatePost(Post post)
         {
             try

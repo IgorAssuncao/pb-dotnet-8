@@ -18,6 +18,6 @@ namespace Services
 
         Task<bool> RemoveComment(Guid id);
 
-        Task<List<Comment>> GetAllCommentsOfAPost(Guid postId);
+        Task<List<CommentResponse>> GetAllCommentsOfAPost(Guid postId);
     }
 }

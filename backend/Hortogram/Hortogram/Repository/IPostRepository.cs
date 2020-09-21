@@ -10,6 +10,8 @@ namespace Repositories
     {
         HortogramContext Context { get; set; }
 
+        Task<List<Post>> BuildFeed(Guid userId);
+
         Task CreatePost(Post post);
 
         Task UpdatePost(Post post);

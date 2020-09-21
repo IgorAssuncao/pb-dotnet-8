@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -11,6 +9,7 @@ using Services;
 
 namespace Hortogram.Controllers
 {
+    [Route("api/[controller]")]
     public class CommentController : ControllerBase
     {
         public ICommentService CommentService { get; set; }
@@ -45,7 +44,7 @@ namespace Hortogram.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] CommentRequest commentReq)
+        public async Task<IActionResult> Post([FromBody] CommentRequest commentReq)
         {
             Guid id = new Guid();
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Models;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -12,7 +10,7 @@ using Hortogram.Common;
 namespace Hortogram.Controllers
 {
     [Route("api/[controller]")]
-    public class PostController : Controller
+    public class PostController : ControllerBase
     {
         public IPostService PostService { get; set; }
         public IImageService ImageService { get; set; }
@@ -23,6 +21,13 @@ namespace Hortogram.Controllers
             PostService = postService;
             ImageService = imageService;
             UserService = userService;
+        }
+
+        [HttpGet]
+        [Route("feed")]
+        public async Task<IActionResult> BuildFeed([FromQuery] Guid userId)
+        {
+            return Ok(await PostService.BuildFeed(userId));
         }
 
         // GET: api/Post?userId

@@ -10,6 +10,8 @@ namespace Services
     {
         IPostRepository PostRepository { get; set; }
 
+        Task<List<PostResponse>> BuildFeed(Guid userId);
+
         Task<Post> CreatePost(Guid Id, Guid UserId, string photoUrl, string description);
 
         Task<Post> GetById(Guid id);
