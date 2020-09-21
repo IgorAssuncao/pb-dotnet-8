@@ -2,6 +2,15 @@
     margin-bottom: 16px;
 }
 
+.posts {
+    width: 432px;
+}
+
+.imagePost {
+    width: 400px;
+    height: 500px;
+}
+
 h1{
     width: 800px;
     text-align: center;

@@ -1,0 +1,20 @@
+.Home {
+    text-align: center;
+}
+
+.divCreatePost {
+    margin-top: 30px;
+    text-align: center;
+    display: block;
+}
+
+.createPost {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.posts {
+    margin-top: 40px;
+}

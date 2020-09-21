@@ -12,24 +12,38 @@ function SignUp() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [image, setImage] = useState("");
+    const [imageBase64, setImageBase64] = useState("");
     const [modalShow, setModalShow] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     let routerHistory = useHistory();
 
     function validateForm() {
         return email.length > 0 && password.length > 0
-            && firstName.length > 0 && lastName.length > 0;
+            && firstName.length > 0 && lastName.length > 0
+            && imageBase64.length > 0;
+    }
+
+    function setImage64(blob) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            setImageBase64(e.target.result);
+        }
+        reader.readAsDataURL(blob)
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
         setLoading(true)
-        api.post('/User', {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            imageBase64: image
+        
+        const formData = new FormData();
+        formData.append("FirstName", firstName);
+        formData.append("Lastname", lastName);
+        formData.append("Email", email);
+        formData.append("Password", password);
+        formData.append("ImageBase64", imageBase64);
+        
+        api.post('/User', formData, {
+            headers: {"Content-Type": "multipart/form-data"}
         }).then(function (response) {
             routerHistory.push('/login')
         }).catch(function (error) {
@@ -81,12 +95,12 @@ function SignUp() {
                         type="password"
                     />
                 </Form.Group>
-                <Form.Group controlId="photo" bsSize="large">
+                <Form.Group controlId="image" bsSize="large">
                     <Form.Label>Foto de Perfil</Form.Label>
-                    <input 
+                    <Form.Control
+                        onChange={e => setImage64(e.target.files[0])}
                         type="file" 
                         accept="image/*"
-                        onChange={e => setImage(e.target.files[0])}    
                     />
                 </Form.Group>
                 <Button block bsSize="large" disabled={!validateForm()} type="submit">

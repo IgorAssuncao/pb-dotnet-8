@@ -1,0 +1,29 @@
+.user {
+    display: grid;
+    background-color: blue;
+}
+
+.posts {
+    width: 432px;
+}
+
+.infoPosts {
+    display: inline-flex;
+    width: 400px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.infoPosts h3 {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.imagePost {
+    width: 400px;
+    height: 500px;
+}
+
+h1 {
+    text-align: left;
+}

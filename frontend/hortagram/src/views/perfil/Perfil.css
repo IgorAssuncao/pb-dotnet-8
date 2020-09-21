@@ -37,3 +37,8 @@ hr {
     width: 800px;
     display: inline-flex;
 }
+
+.buttonUsers {
+    width: 800px;
+    margin-top: 12px;
+}
