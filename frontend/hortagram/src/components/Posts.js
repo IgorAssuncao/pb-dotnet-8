@@ -26,7 +26,6 @@ function Posts(props) {
         }).then(function (response) {
             window.location.reload(true);
         }).catch(function (error) {
-            console.log(error)
             setAlertModalShow(true)
         }).finally(function () {
             setLoading(false)
@@ -50,6 +49,7 @@ function Posts(props) {
                 <Col>
                     <Card>
                         <Card.Img variant="top" className="imagePost" src={info.photoUrl} />
+                        <h5>{info.description}</h5>
                         {comments}
                         <Form onSubmit={(e) => handleSubmit(e, info.id)}>
                             <Form.Group controlId="comment" bsSize="large">

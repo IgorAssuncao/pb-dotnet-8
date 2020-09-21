@@ -10,6 +10,7 @@ function PerfilPosts(props) {
                 <Col>
                     <Card >
                         <Card.Img variant="top" className="imagePost" src={info.photoUrl} />
+                        <h5>{info.description}</h5>
                     </Card>
                 </Col>
             )

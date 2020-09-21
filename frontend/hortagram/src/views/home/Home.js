@@ -21,13 +21,11 @@ function Home() {
         let id = localStorage.getItem('id');
         api.get(`/Post/feed?userId=${id}`)
         .then(function (response) {
-            console.log(response)
             var responseList = response.data 
             for(const user in responseList) {
                 if(responseList[user].id != id) list.push(responseList[user])
             }
         }).catch(function (error) {
-            console.log(error)
             setAlertModalShow(true)
         }).finally(function () {
             setLoading(false)

@@ -119,7 +119,6 @@ function Perfil() {
             }).then(function (response) {
                 getMyFollowers(true)
             }).catch(function (error) {
-                console.log(error)
                 setAlertModalShow(true)
             }).finally(function () {
                 setLoading(false)
