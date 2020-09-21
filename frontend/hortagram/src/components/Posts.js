@@ -33,6 +33,19 @@ function Posts(props) {
         setComment("")
     }
 
+    function deleteComment(id) {
+        setLoading(true)
+
+        api.delete(`/Comment/${id}`).then(function (response) {
+            console.log(response)
+            window.location.reload(true);
+        }).catch(function (error) {
+            setAlertModalShow(true)
+        }).finally(function () {
+            setLoading(false)
+        });
+    }
+
     if (props.list.length > 0) {
         const cards = []
         for (let info of props.list) {
@@ -42,6 +55,10 @@ function Posts(props) {
                     <div className="infoPosts">
                         <p><b>id {comment1.id}:</b></p>
                         <p>{comment1.content}</p>
+                        {comment1.userId == localStorage.getItem('id') 
+                         ? <Button onClick={() => deleteComment(comment1.id)}>deletar</Button>
+                         : ""
+                        }
                     </div>
                 )
             }
