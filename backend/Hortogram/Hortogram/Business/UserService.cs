@@ -35,6 +35,27 @@ namespace Services
             return userResponse;
         }
 
+        public async Task<List<UserResponse>> GetUsersByNameOrLastname(string name, string lastname)
+        {
+            List<User> users = await UserRepository.GetUsersByNameOrLastname(name, lastname);
+            List<UserResponse> usersResponse = new List<UserResponse>();
+
+            foreach(User u in users)
+            {
+                usersResponse.Add(new UserResponse
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    Lastname = u.Lastname,
+                    Email = u.Email,
+                    Status = u.Status,
+                    PhotoURL = u.PhotoURL
+                });
+            }
+
+            return usersResponse;
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             User user = await UserRepository.GetByEmail(email);
