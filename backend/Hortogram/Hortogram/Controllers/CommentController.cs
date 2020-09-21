@@ -4,12 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Hortogram.Models;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hortogram.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class CommentController : ControllerBase
     {
         public ICommentService CommentService { get; set; }
@@ -61,6 +64,7 @@ namespace Hortogram.Controllers
 
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             bool result = await CommentService.RemoveComment(id);
@@ -72,6 +76,7 @@ namespace Hortogram.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] string content)
         {
             var commentFound = await CommentService.GetById(id);
