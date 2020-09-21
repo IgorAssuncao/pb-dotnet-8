@@ -1,22 +1,22 @@
 import React from "react";
-import { Row, Col, CardGroup, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import "./PerfilPosts.css";
 
 function PerfilPosts(props) {
-    if (props.list > 0) {
+    if (props.posts.length > 0) {
         const cards = []
-        for (let image of props.list) {
+        for (let info of props.posts) {
             cards.push(
-                <Col xs={6} md={4}>
+                <Col>
                     <Card >
-                        <Card.Img variant="top" src={image} />
+                        <Card.Img variant="top" className="imagePost" src={info.photoUrl} />
                     </Card>
                 </Col>
             )
         }
         return (
             <div>
-                <Row>
+                <Row className="posts">
                     {cards}
                 </Row>
             </div>

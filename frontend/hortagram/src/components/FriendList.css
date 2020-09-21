@@ -1,0 +1,21 @@
+.user {
+    display: grid;
+}
+
+.infoFriend {
+    display: inline-flex;
+    width: 800px;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.infoFriend h3 {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.image {
+    width: 100px;
+    height: 100px;
+}

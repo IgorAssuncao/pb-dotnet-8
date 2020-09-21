@@ -19,24 +19,23 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        routerHistory.push('/perfil');
-        // setLoading(true)
-        // api.post('/Auth', {
-        //     email: email,
-        //     password: password
-        // }).then(function (response) {
-        //     if (response.data.status = true) {
-        //         localStorage.setItem('id', response.data.id.toString())
-        //         localStorage.setItem('token', response.data.token.toString())
-        //         routerHistory.push('/perfil');
-        //     } else {
-        //         setModalShow(true)
-        //     }
-        // }).catch(function (error) {
-        //     setModalShow(true)
-        // }).finally(function () {
-        //     setLoading(false)
-        // });
+        setLoading(true)
+        api.post('/Auth', {
+            email: email,
+            password: password
+        }).then(function (response) {
+            if (response.data.status = true) {
+                localStorage.setItem('id', response.data.id.toString())
+                localStorage.setItem('token', response.data.token.toString())
+                routerHistory.push(`/perfil/${response.data.id.toString()}`);
+            } else {
+                setModalShow(true)
+            }
+        }).catch(function (error) {
+            setModalShow(true)
+        }).finally(function () {
+            setLoading(false)
+        });
     }
 
     return (
