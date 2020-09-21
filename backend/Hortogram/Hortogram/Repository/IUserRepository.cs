@@ -14,6 +14,7 @@ namespace Repositories
 
         Task CreateUser(User user);
         Task UpdateUser(User user);
+        Task<List<User>> GetUsersByNameOrLastname(string name, string lastname);
         Task<User> GetByEmail(string email);
         Task<User> GetById(Guid id);
         Task<List<User>> GetAll();

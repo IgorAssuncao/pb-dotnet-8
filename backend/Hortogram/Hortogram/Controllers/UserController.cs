@@ -27,9 +27,16 @@ namespace Hortogram.Controllers
 
         // GET: api/User
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] string name, [FromQuery] string lastname)
         {
             return Ok(await UserService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IActionResult> GetUsersByNameOrLastname([FromQuery] string name, [FromQuery] string lastname)
+        {
+            return Ok(await UserService.GetUsersByNameOrLastname(name, lastname));
         }
 
         // GET: api/User/5
@@ -50,6 +57,7 @@ namespace Hortogram.Controllers
 
             string photoUrl = await ImageService.UploadFile("profile", Id, imageProperties.FileExtension, imageProperties.ImageBytes);
 
+            userReq.Status = true;
             UserResponse userRes = await UserService.CreateUser(Id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, photoUrl, userReq.Status);
 
             if (userRes == null)
@@ -60,25 +68,26 @@ namespace Hortogram.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] string firstName, string lastName, string email, string password, string photoUrl)
+        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] string firstName, string lastName)
         {
             User userFound = await UserService.GetUserById(id);
+            if (userFound == null)
+                return BadRequest();
+
             User newUser = new User();
 
             newUser.Id = id;
 
-            if (String.IsNullOrEmpty(firstName))
+            if (string.IsNullOrEmpty(firstName))
                 newUser.FirstName = userFound.FirstName;
-            if (String.IsNullOrEmpty(lastName))
+            if (string.IsNullOrEmpty(lastName))
                 newUser.Lastname = userFound.Lastname;
-            if (String.IsNullOrEmpty(email))
-                newUser.Email = userFound.Email;
-            if (String.IsNullOrEmpty(password))
-                newUser.Password = userFound.Password;
-            if (String.IsNullOrEmpty(photoUrl))
-                newUser.PhotoURL = userFound.PhotoURL;
 
-            bool result = await UserService.UpdateUser(id, firstName, lastName, email, password, photoUrl);
+            newUser.Email = userFound.Email;
+            newUser.Password = userFound.Password;
+            newUser.PhotoURL = userFound.PhotoURL;
+
+            bool result = await UserService.UpdateUser(id, newUser.FirstName, newUser.Lastname, newUser.Email, newUser.Password, newUser.PhotoURL);
 
             if (!result)
                 return BadRequest();
@@ -91,6 +100,9 @@ namespace Hortogram.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             User user = await UserService.GetUserById(id);
+
+            if (user == null)
+                return BadRequest();
 
             bool result = await UserService.RemoveUser(user);
 

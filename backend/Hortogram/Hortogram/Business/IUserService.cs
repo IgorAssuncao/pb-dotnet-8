@@ -13,6 +13,8 @@ namespace Services
 
         Task<UserResponse> CreateUser(Guid Id, string firstName, string lastName, string email, string password, string photoUrl, bool status);
 
+        Task<List<UserResponse>> GetUsersByNameOrLastname(string name, string lastname);
+
         Task<User> GetUserByEmail(string email);
 
         Task<UserResponse> GetByEmail(string email);

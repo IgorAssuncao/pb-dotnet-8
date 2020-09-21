@@ -47,6 +47,11 @@ namespace Repositories
             }
         }
 
+        public async Task<List<User>> GetUsersByNameOrLastname(string name, string lastname)
+        {
+            return await Context.UserDbSet.Where(user => user.FirstName.Contains(name) || user.Lastname.Contains(lastname)).ToListAsync();
+        }
+
         public async Task<User> GetByEmail(string email)
         {
             return await Context.UserDbSet.FirstOrDefaultAsync(user => user.Email == email);
