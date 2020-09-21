@@ -10,6 +10,6 @@ namespace Services
         public Guid UserId { get; set; }
         public string PhotoUrl { get; set; }
         public string Description { get; set; }
-        public List<CommentResponse> Comment { get; set; }
+        public List<CommentResponse> Comments { get; set; }
     }
 }

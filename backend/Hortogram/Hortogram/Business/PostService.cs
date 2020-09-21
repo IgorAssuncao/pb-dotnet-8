@@ -30,7 +30,7 @@ namespace Services
                     Id = post.Id,
                     UserId = post.UserId,
                     PhotoUrl = post.PhotoUrl,
-                    Comment = await CommentService.GetAllCommentsOfAPost(post.Id)
+                    Comments = await CommentService.GetAllCommentsOfAPost(post.Id)
                 };
                 postsResponse.Add(postResponse);
             }
@@ -64,7 +64,7 @@ namespace Services
                     Id = post.Id,
                     UserId = post.UserId,
                     PhotoUrl = post.PhotoUrl,
-                    Comment = await CommentService.GetAllCommentsOfAPost(post.Id)
+                    Comments = await CommentService.GetAllCommentsOfAPost(post.Id)
                 };
                 postsResponse.Add(postResponse);
             }

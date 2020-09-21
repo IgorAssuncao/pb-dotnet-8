@@ -48,6 +48,9 @@ namespace Hortogram.Controllers
         {
             Guid id = new Guid();
 
+            if (commentReq.UserId == null || commentReq.PostId == null)
+                return BadRequest();
+
             Comment commentRes = await CommentService.CreateComment(id, commentReq.UserId, commentReq.PostId, commentReq.Content);
 
             if (commentRes == null)

@@ -78,14 +78,15 @@ namespace Services
         public async Task<List<CommentResponse>> GetAllCommentsOfAPost(Guid postId)
         {
             List<Comment> comments = await CommentRepository.GetAllCommentsOfAPost(postId);
-            List<CommentResponse> commentResponse = new List<CommentResponse>();
+            List<CommentResponse> commentsResponse = new List<CommentResponse>();
 
             foreach (Comment comment in comments)
             {
-                commentResponse.Add(new CommentResponse { Id = comment.Id, UserId = comment.UserId, PostId = comment.PostId, Content = comment.Content });
+                CommentResponse commentResponse = new CommentResponse { Id = comment.Id, UserId = comment.UserId, PostId = comment.PostId, Content = comment.Content };
+                commentsResponse.Add(commentResponse);
             }
 
-            return commentResponse;
+            return commentsResponse;
         }
     }
 }
