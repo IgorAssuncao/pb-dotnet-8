@@ -15,6 +15,8 @@ namespace Context
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasIndex(entity => entity.Email).IsUnique();
+
             modelBuilder.Entity<UsersFollowers>().HasKey(entity => new { entity.UserId, entity.FollowerId });
             modelBuilder.Entity<UsersFollowers>()
                 .HasOne<User>(entity => entity.UserOrFollower)

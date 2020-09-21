@@ -84,8 +84,7 @@ namespace Hortogram.Migrations
                         name: "FK_comment_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -102,6 +101,13 @@ namespace Hortogram.Migrations
                 name: "IX_post_UserId",
                 table: "post",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_Email",
+                table: "user",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersFollowers_FollowerId",
