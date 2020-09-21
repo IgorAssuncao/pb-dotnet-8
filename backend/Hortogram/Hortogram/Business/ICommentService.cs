@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Models;
 using Repositories;
 
@@ -9,14 +10,14 @@ namespace Services
     {
         ICommentRepository CommentRepository { get; set; }
 
-        Comment CreateComment(Guid id, Guid userId, Guid postId, string content);
+        Task<Comment> CreateComment(Guid id, Guid userId, Guid postId, string content);
 
-        Comment GetById(Guid id);
+        Task<Comment> GetById(Guid id);
 
-        bool UpdateComment(Guid id, string content);
+        Task<bool> UpdateComment(Comment comment);
 
-        bool RemoveComment(Guid id);
+        Task<bool> RemoveComment(Guid id);
 
-        List<Comment> GetAllCommentsOfAPost(Guid postId);
+        Task<List<Comment>> GetAllCommentsOfAPost(Guid postId);
     }
 }

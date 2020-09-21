@@ -1,6 +1,7 @@
 ﻿using Models;
 using Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Services
@@ -27,23 +28,17 @@ namespace Services
             return await PostRepository.GetById(id);
         }
 
-        public async Task<bool> UpdatePost(Guid id, string photoUrl, string description)
+        public async Task<List<Post>> GetAllPostsOfAUser(Guid userId)
+        {
+            return await PostRepository.GetAllPostsOfAUser(userId);
+        }
+
+        public async Task<bool> UpdatePost(Post post)
         {
             try
             {
-                var post = await PostRepository.GetById(id);
-
-                if (!String.IsNullOrEmpty(photoUrl))
-                {
-                    post.PhotoUrl = photoUrl;
-                }
-                if (!String.IsNullOrEmpty(description))
-                {
-                    post.Description = description;
-                }
-
                 await PostRepository.UpdatePost(post);
-                return true;
+                return true;   
             }
             catch (Exception e)
             {

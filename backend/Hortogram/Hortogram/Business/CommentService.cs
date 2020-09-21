@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Models;
 using Repositories;
 
@@ -14,13 +15,13 @@ namespace Services
             CommentRepository = commentRepository;
         }
 
-        public Comment CreateComment(Guid id, Guid userId, Guid postId, string content)
+        public async Task<Comment> CreateComment(Guid id, Guid userId, Guid postId, string content)
         {
             var comment = new Comment(id, userId, postId, content);
 
             try
             {
-                CommentRepository.CreateComment(comment);
+                await CommentRepository.CreateComment(comment);
                 return comment;
 
             } catch (Exception e)
@@ -30,11 +31,11 @@ namespace Services
             }
         }
 
-        public Comment GetById(Guid id)
+        public async Task<Comment> GetById(Guid id)
         {
             try
             {
-                return CommentRepository.GetById(id);
+                return await CommentRepository.GetById(id);
             } catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -42,12 +43,12 @@ namespace Services
             }
         }
 
-        public bool RemoveComment(Guid id)
+        public async Task<bool> RemoveComment(Guid id)
         {
             try
             {
-                var comment = CommentRepository.GetById(id);
-                CommentRepository.RemoveComment(comment);
+                var comment = await CommentRepository.GetById(id);
+                await CommentRepository.RemoveComment(comment);
                 return true;
             } catch (Exception e)
             {
@@ -56,17 +57,11 @@ namespace Services
             }
         }
 
-        public bool UpdateComment(Guid id, string content)
+        public async Task<bool> UpdateComment(Comment comment)
         {
             try
             {
-                var comment = CommentRepository.GetById(id);
-
-                if (!String.IsNullOrEmpty(content))
-                {
-                    comment.Content = content;
-                }
-                CommentRepository.UpdateComment(comment);
+                await CommentRepository.UpdateComment(comment);
                 return true;
 
             } catch (Exception e)
@@ -76,11 +71,11 @@ namespace Services
             }
         }
 
-        public List<Comment> GetAllCommentsOfAPost(Guid postId)
+        public async Task<List<Comment>> GetAllCommentsOfAPost(Guid postId)
         {
             try
             {
-                var comments = CommentRepository.GetAllCommentsOfAPost(postId);
+                var comments = await CommentRepository.GetAllCommentsOfAPost(postId);
                 return comments;
             } catch (Exception e)
             {
