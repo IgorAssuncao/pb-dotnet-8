@@ -105,31 +105,41 @@ namespace Services
 
         public async Task<bool> UpdateUser(Guid id, string firstName, string lastName, string email, string password, string photoUrl)
         {
-            var user = await UserRepository.GetById(id);
+            try
+            {
+                User user = await UserRepository.GetById(id);
 
-            if (!string.IsNullOrEmpty(firstName))
-            {
-                user.FirstName = firstName;
-            }
-            if (!string.IsNullOrEmpty(lastName))
-            {
-                user.Lastname = lastName;
-            }
-            if (!string.IsNullOrEmpty(email))
-            {
-                user.Email = email;
-            }
-            if (!string.IsNullOrEmpty(password))
-            {
-                user.Password = password;
-            }
-            if (!string.IsNullOrEmpty(photoUrl))
-            {
-                user.Password = password;
-            }
+                if (user == null)
+                    return false;
 
-            UserRepository.UpdateUser(user);
-            return true;
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    user.FirstName = firstName;
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    user.Lastname = lastName;
+                }
+                if (!string.IsNullOrEmpty(email))
+                {
+                    user.Email = email;
+                }
+                if (!string.IsNullOrEmpty(password))
+                {
+                    user.Password = password;
+                }
+                if (!string.IsNullOrEmpty(photoUrl))
+                {
+                    user.PhotoURL = photoUrl;
+                }
+
+                await UserRepository.UpdateUser(user);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<bool> RemoveUser(User user)
@@ -138,7 +148,7 @@ namespace Services
             {
                 user.Status = false;
 
-                UserRepository.UpdateUser(user);
+                await UserRepository.UpdateUser(user);
                 return true;
             }
             catch (Exception e)
@@ -191,7 +201,7 @@ namespace Services
                 return false;
 
             UsersFollowers userFollower = new UsersFollowers { UserId = userId, FollowerId = followerId };
-            UserRepository.RemoveFollower(userFollower);
+            await UserRepository.RemoveFollower(userFollower);
             return true;
         }
     }

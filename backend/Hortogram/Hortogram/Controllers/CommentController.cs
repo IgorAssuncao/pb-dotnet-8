@@ -25,7 +25,7 @@ namespace Hortogram.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var comment = CommentService.GetById(id);
+            var comment = await CommentService.GetById(id);
 
             if (comment == null)
                 return BadRequest();

@@ -68,26 +68,9 @@ namespace Hortogram.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] User userReq)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] User userReq)
         {
-            User userFound = await UserService.GetUserById(id);
-            if (userFound == null)
-                return BadRequest();
-
-            User newUser = new User();
-
-            newUser.Id = id;
-
-            if (string.IsNullOrEmpty(userReq.FirstName))
-                newUser.FirstName = userFound.FirstName;
-            if (string.IsNullOrEmpty(userReq.Lastname))
-                newUser.Lastname = userFound.Lastname;
-
-            newUser.Email = userFound.Email;
-            newUser.Password = userFound.Password;
-            newUser.PhotoURL = userFound.PhotoURL;
-
-            bool result = await UserService.UpdateUser(id, newUser.FirstName, newUser.Lastname, newUser.Email, newUser.Password, newUser.PhotoURL);
+            bool result = await UserService.UpdateUser(id, userReq.FirstName, userReq.Lastname, userReq.Email, userReq.Password, userReq.PhotoURL);
 
             if (!result)
                 return BadRequest();
