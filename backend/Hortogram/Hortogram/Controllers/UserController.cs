@@ -102,7 +102,7 @@ namespace Hortogram.Controllers
             return Ok(await UserService.GetFollowers(id));
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("{id}/followers")]
         public async Task<IActionResult> AddFollower([FromRoute] Guid id, [FromBody] FollowerRequest follower)
         {
@@ -114,7 +114,7 @@ namespace Hortogram.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpPut]
         [Route("{id}/followers")]
         public async Task<IActionResult> RemoveFollower([FromRoute] Guid id, [FromBody] FollowerRequest follower)
         {
