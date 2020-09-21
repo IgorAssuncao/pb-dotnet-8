@@ -30,7 +30,7 @@ function SimpleInputModal(props) {
         }).finally(function () {
             setLoading(false)
             props.onHide()
-            routerHistory.push(`/perfil/${localStorage.getItem('id')}`)
+            window.location.reload(true);
         });
     }
 

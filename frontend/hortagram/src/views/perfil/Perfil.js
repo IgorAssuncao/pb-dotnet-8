@@ -5,7 +5,7 @@ import SimpleInputModal from "../../components/SimpleInputModal";
 import SimpleAlertModal from "../../components/SimpleAlertModal";
 import api from '../../services/api'
 import Loading from "../../components/Loading";
-import PerfilPosts from "../../components/PerfilPosts";
+import Posts from "../../components/Posts";
 import NavBar from "../../components/NavBar";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -32,7 +32,7 @@ function Perfil() {
             setUser(response.data)
             getPosts()
             if(id == localStorage.getItem('id')) {
-                getMyFollowers()
+                getMyFollowers(false)
             } else {
                 getFollowers()
             }
@@ -60,7 +60,7 @@ function Perfil() {
         });
     }
 
-    async function getMyFollowers() {
+    async function getMyFollowers(isReload) {
         setComponentIsMounted(true)
         setLoading(true)
         api.get(`/User/${localStorage.getItem('id')}/followers`)
@@ -78,6 +78,7 @@ function Perfil() {
             localStorage.setItem("myIdsFollowers", JSON.stringify(myIdsFollowers))
             localStorage.setItem("myFollowers", JSON.stringify(myFollowers))
             
+            if(isReload) window.location.reload(true);
         }).catch(function (error) {
             setAlertModalShow(true)
         }).finally(function () {
@@ -116,10 +117,8 @@ function Perfil() {
             api.put(`/User/${localStorage.getItem('id')}/followers`, { //deleted
                 "id": id
             }).then(function (response) {
-                getFollowers()
-                setComponentIsMounted(false)
+                getMyFollowers(true)
             }).catch(function (error) {
-                console.log(error)
                 setAlertModalShow(true)
             }).finally(function () {
                 setLoading(false)
@@ -128,8 +127,7 @@ function Perfil() {
             api.post(`/User/${localStorage.getItem('id')}/followers`, { //addiction
                 "id": id
             }).then(function (response) {
-                getFollowers()
-                setComponentIsMounted(false)
+                getMyFollowers(true)
             }).catch(function (error) {
                 setAlertModalShow(true)
             }).finally(function () {
@@ -183,8 +181,9 @@ function Perfil() {
             <hr />
 
             <div className="posts">
-                <PerfilPosts 
-                    posts={posts}    
+                <Posts 
+                    list={posts}  
+                    canComment={false}  
                 />
             </div>
 
