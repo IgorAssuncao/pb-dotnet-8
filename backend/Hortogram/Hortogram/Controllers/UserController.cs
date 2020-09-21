@@ -68,7 +68,7 @@ namespace Hortogram.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] string firstName, string lastName)
+        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] UserRequest userReq)
         {
             User userFound = await UserService.GetUserById(id);
             if (userFound == null)
@@ -78,9 +78,9 @@ namespace Hortogram.Controllers
 
             newUser.Id = id;
 
-            if (string.IsNullOrEmpty(firstName))
+            if (string.IsNullOrEmpty(userReq.FirstName))
                 newUser.FirstName = userFound.FirstName;
-            if (string.IsNullOrEmpty(lastName))
+            if (string.IsNullOrEmpty(userReq.Lastname))
                 newUser.Lastname = userFound.Lastname;
 
             newUser.Email = userFound.Email;
