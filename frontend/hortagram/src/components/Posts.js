@@ -45,24 +45,28 @@ function Posts(props) {
                     </div>
                 )
             }
+            const commentForm = props.canComment ?
+                <Form onSubmit={(e) => handleSubmit(e, info.id)}>
+                    <Form.Group controlId="comment" bsSize="large">
+                        <Form.Control
+                            value={comment}
+                            onChange={e => setComment(e.target.value)}
+                            type="text"
+                        />
+                    </Form.Group>
+                    <Button block bsSize="large" disabled={!validateForm()} type="submit">
+                        Comentar
+                    </Button>
+                </Form>
+            : ""
+
             cards.push(
                 <Col>
                     <Card>
                         <Card.Img variant="top" className="imagePost" src={info.photoUrl} />
                         <h5>{info.description}</h5>
                         {comments}
-                        <Form onSubmit={(e) => handleSubmit(e, info.id)}>
-                            <Form.Group controlId="comment" bsSize="large">
-                                <Form.Control
-                                    value={comment}
-                                    onChange={e => setComment(e.target.value)}
-                                    type="text"
-                                />
-                            </Form.Group>
-                            <Button block bsSize="large" disabled={!validateForm()} type="submit">
-                                Comentar
-                            </Button>
-                        </Form>
+                        {commentForm}
                     </Card>
                 </Col>
             )

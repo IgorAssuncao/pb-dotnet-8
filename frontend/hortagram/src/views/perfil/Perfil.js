@@ -5,7 +5,7 @@ import SimpleInputModal from "../../components/SimpleInputModal";
 import SimpleAlertModal from "../../components/SimpleAlertModal";
 import api from '../../services/api'
 import Loading from "../../components/Loading";
-import PerfilPosts from "../../components/PerfilPosts";
+import Posts from "../../components/Posts";
 import NavBar from "../../components/NavBar";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -181,8 +181,9 @@ function Perfil() {
             <hr />
 
             <div className="posts">
-                <PerfilPosts 
-                    posts={posts}    
+                <Posts 
+                    list={posts}  
+                    canComment={false}  
                 />
             </div>
 

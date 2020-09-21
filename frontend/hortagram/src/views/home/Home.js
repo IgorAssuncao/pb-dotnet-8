@@ -104,6 +104,7 @@ function Home() {
             <div className="posts">
                 <Posts 
                     list = {list}
+                    canComment={true}  
                 />
             </div>
 
