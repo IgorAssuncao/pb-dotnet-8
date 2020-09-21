@@ -27,9 +27,16 @@ namespace Hortogram.Controllers
 
         // GET: api/User
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] string name, [FromQuery] string lastname)
         {
             return Ok(await UserService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IActionResult> GetUsersByNameOrLastname([FromQuery] string name, [FromQuery] string lastname)
+        {
+            return Ok(await UserService.GetUsersByNameOrLastname(name, lastname));
         }
 
         // GET: api/User/5
