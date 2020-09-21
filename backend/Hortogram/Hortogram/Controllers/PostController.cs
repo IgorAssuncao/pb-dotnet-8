@@ -26,20 +26,20 @@ namespace Hortogram.Controllers
         }
 
         // GET: api/Post
-        [HttpGet]
-        public async Task<IActionResult> GetAllPostsOfAUser([FromQuery] Guid userId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAllPostsOfAUser([FromRoute] Guid id)
         {
             var user = await UserService.GetById(userId);
 
             if (user == null)
                 return BadRequest();
 
-            return Ok(await PostService.GetAllPostsOfAUser(userId));
+            return Ok(await PostService.GetAllPostsOfAUser(id));
         }
 
         // GET api/Post/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromQuery] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var post = await PostService.GetById(id);
 
