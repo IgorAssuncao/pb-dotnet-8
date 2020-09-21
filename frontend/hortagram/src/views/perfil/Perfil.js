@@ -32,7 +32,7 @@ function Perfil() {
             setUser(response.data)
             getPosts()
             if(id == localStorage.getItem('id')) {
-                getMyFollowers()
+                getMyFollowers(false)
             } else {
                 getFollowers()
             }
@@ -60,7 +60,7 @@ function Perfil() {
         });
     }
 
-    async function getMyFollowers() {
+    async function getMyFollowers(isReload) {
         setComponentIsMounted(true)
         setLoading(true)
         api.get(`/User/${localStorage.getItem('id')}/followers`)
@@ -78,6 +78,7 @@ function Perfil() {
             localStorage.setItem("myIdsFollowers", JSON.stringify(myIdsFollowers))
             localStorage.setItem("myFollowers", JSON.stringify(myFollowers))
             
+            if(isReload) window.location.reload(true);
         }).catch(function (error) {
             setAlertModalShow(true)
         }).finally(function () {
@@ -116,8 +117,7 @@ function Perfil() {
             api.put(`/User/${localStorage.getItem('id')}/followers`, { //deleted
                 "id": id
             }).then(function (response) {
-                getFollowers()
-                setComponentIsMounted(false)
+                getMyFollowers(true)
             }).catch(function (error) {
                 console.log(error)
                 setAlertModalShow(true)
@@ -128,8 +128,7 @@ function Perfil() {
             api.post(`/User/${localStorage.getItem('id')}/followers`, { //addiction
                 "id": id
             }).then(function (response) {
-                getFollowers()
-                setComponentIsMounted(false)
+                getMyFollowers(true)
             }).catch(function (error) {
                 setAlertModalShow(true)
             }).finally(function () {

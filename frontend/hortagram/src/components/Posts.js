@@ -18,18 +18,13 @@ function Posts(props) {
         event.preventDefault();
         
         setLoading(true)
-        const formData = new FormData();
-        formData.append("UserId", localStorage.getItem('id'));
-        formData.append("PostId", id);
-        formData.append("Content", comment);
-        
-        api.post(`/Comment`, formData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                "Content-Type": "multipart/form-data"
-            }
+
+        api.post(`/Comment`, {
+            "UserId": localStorage.getItem('id'),
+            "PostId": id,
+            "Content": comment
         }).then(function (response) {
-            console.log(response)
+            window.location.reload(true);
         }).catch(function (error) {
             console.log(error)
             setAlertModalShow(true)
@@ -43,20 +38,18 @@ function Posts(props) {
         const cards = []
         for (let info of props.list) {
             const comments = []
-            for (let comment1 of props.list) {
+            for (let comment1 of info.comments) {
                 comments.push(
                     <div className="infoPosts">
-                        {/* <p><b>{comment1.firstName} {comment1.lastname}:</b></p>
-                        <p>{comment1.comment}</p> */}
-                        <p><b>meu nome:</b></p>
-                        <p>comentario</p>
+                        <p><b>id {comment1.id}:</b></p>
+                        <p>{comment1.content}</p>
                     </div>
                 )
             }
             cards.push(
                 <Col>
                     <Card>
-                        <Card.Img variant="top" className="imagePost" src="assets/quadrado_preto.png" />
+                        <Card.Img variant="top" className="imagePost" src={info.photoUrl} />
                         {comments}
                         <Form onSubmit={(e) => handleSubmit(e, info.id)}>
                             <Form.Group controlId="comment" bsSize="large">
