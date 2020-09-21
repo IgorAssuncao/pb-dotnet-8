@@ -64,6 +64,7 @@ namespace Hortogram.Controllers
 
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             bool result = await CommentService.RemoveComment(id);
@@ -75,6 +76,7 @@ namespace Hortogram.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] string content)
         {
             var commentFound = await CommentService.GetById(id);
