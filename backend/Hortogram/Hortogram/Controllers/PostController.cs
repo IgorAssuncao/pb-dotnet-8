@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Hortogram.Common;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hortogram.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class PostController : ControllerBase
     {
         public IPostService PostService { get; set; }

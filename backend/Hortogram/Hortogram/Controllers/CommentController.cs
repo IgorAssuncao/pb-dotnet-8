@@ -10,6 +10,8 @@ using Services;
 namespace Hortogram.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class CommentController : ControllerBase
     {
         public ICommentService CommentService { get; set; }
