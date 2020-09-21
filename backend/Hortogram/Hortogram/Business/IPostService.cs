@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
 using Repositories;
@@ -13,7 +14,9 @@ namespace Services
 
         Task<Post> GetById(Guid id);
 
-        Task<bool> UpdatePost(Guid id, string photoUrl, string description);
+        Task<List<Post>> GetAllPostsOfAUser(Guid userId);
+
+        Task<bool> UpdatePost(Post post);
 
         Task<bool> RemovePost(Guid id);
     }

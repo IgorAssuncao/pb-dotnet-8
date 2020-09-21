@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Context;
@@ -21,8 +22,8 @@ namespace Repositories
         {
             try
             {
-                await Context.PostDbSet.AddAsync(post);
-                Context.SaveChanges();
+                Context.PostDbSet.Add(post);
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -36,7 +37,7 @@ namespace Repositories
             try
             {
                 Context.PostDbSet.Update(post);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -50,7 +51,7 @@ namespace Repositories
             try
             {
                 Context.PostDbSet.Remove(post);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -62,6 +63,11 @@ namespace Repositories
         public async Task<Post> GetById(Guid id)
         {
             return await Context.PostDbSet.FirstOrDefaultAsync(post => post.Id == id);
+        }
+
+        public async Task<List<Post>> GetAllPostsOfAUser(Guid userId)
+        {
+            return await Context.PostDbSet.Where(user => user.Id == userId).ToListAsync();
         }
     }
 }

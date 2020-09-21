@@ -1,6 +1,7 @@
 ﻿using Context;
 using Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Repositories
@@ -16,5 +17,7 @@ namespace Repositories
         Task RemovePost(Post post);
 
         Task<Post> GetById(Guid id);
+
+        Task<List<Post>> GetAllPostsOfAUser(Guid userId);
     }
 }

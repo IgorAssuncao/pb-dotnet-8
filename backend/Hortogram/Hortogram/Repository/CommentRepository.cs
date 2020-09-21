@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Context;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Repositories
@@ -15,32 +17,55 @@ namespace Repositories
             Context = context;
         }
 
-        public void CreateComment(Comment comment)
+        public async Task CreateComment(Comment comment)
         {
-            Context.CommentDbSet.Add(comment);
-            Context.SaveChanges();
+            try
+            {
+                Context.CommentDbSet.Add(comment);
+                await Context.SaveChangesAsync();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public void UpdateComment(Comment comment)
+        public async Task UpdateComment(Comment comment)
         {
-            Context.CommentDbSet.Update(comment);
-            Context.SaveChanges();
+            try
+            {
+                Context.CommentDbSet.Update(comment);
+                await Context.SaveChangesAsync();
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public void RemoveComment(Comment comment)
+        public async Task RemoveComment(Comment comment)
         {
-            Context.CommentDbSet.Remove(comment);
-            Context.SaveChanges();
+            try
+            {
+                Context.CommentDbSet.Remove(comment);
+                await Context.SaveChangesAsync();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public Comment GetById(Guid id)
+        public async Task<Comment> GetById(Guid id)
         {
-            return Context.CommentDbSet.FirstOrDefault(comment => comment.Id == id);
+
+            return await Context.CommentDbSet.FirstOrDefaultAsync(comment => comment.Id == id);
         }
 
-        public List<Comment> GetAllCommentsOfAPost(Guid postId)
+        public async Task<List<Comment>> GetAllCommentsOfAPost(Guid postId)
         {
-            return Context.CommentDbSet.Where(comment => comment.PostId == postId).ToList();
+            return await Context.CommentDbSet.Where(comment => comment.PostId == postId).ToListAsync();
         }
     }
 }

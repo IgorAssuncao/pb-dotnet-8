@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Context;
 using Models;
 
@@ -9,14 +10,14 @@ namespace Repositories
     {
         HortogramContext Context { get; set; }
 
-        void CreateComment(Comment comment);
+        Task CreateComment(Comment comment);
 
-        void UpdateComment(Comment comment);
+        Task UpdateComment(Comment comment);
 
-        void RemoveComment(Comment comment);
+        Task RemoveComment(Comment comment);
 
-        Comment GetById(Guid id);
+        Task<Comment> GetById(Guid id);
 
-        List<Comment> GetAllCommentsOfAPost(Guid postId);
+        Task<List<Comment>> GetAllCommentsOfAPost(Guid postId);
     }
 }
