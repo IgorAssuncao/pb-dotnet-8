@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Context;
+using Hortogram.Models;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
@@ -20,7 +21,13 @@ namespace Repositories
 
         public async Task<List<Post>> BuildFeed(Guid userId)
         {
-            return await Context.PostDbSet.Where(post => post.UserId != userId).ToListAsync();
+            List<UsersFollowers> followers = await Context.UsersFollowers.Where(uf => uf.UserId == userId).ToListAsync();
+            List<Guid> followersGuids = new List<Guid>();
+            foreach(UsersFollowers uf in followers)
+            {
+                followersGuids.Add(uf.FollowerId);
+            }
+            return await Context.PostDbSet.Where(post => post.UserId != userId && followersGuids.Any(followerGuid => followerGuid == post.UserId)).ToListAsync();
         }
 
         public async Task CreatePost(Post post)
