@@ -68,7 +68,7 @@ namespace Hortogram.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] UserRequest userReq)
+        public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] User userReq)
         {
             User userFound = await UserService.GetUserById(id);
             if (userFound == null)
