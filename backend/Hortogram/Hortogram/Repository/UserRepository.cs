@@ -81,7 +81,7 @@ namespace Repositories
                     Lastname = userFound.Lastname,
                     Email = userFound.Email,
                     Status = userFound.Status,
-                    PhotoURL = userFound.Password
+                    PhotoURL = userFound.PhotoURL
                 });
             }
 
