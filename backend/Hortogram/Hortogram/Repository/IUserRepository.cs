@@ -16,6 +16,8 @@ namespace Repositories
 
         void UpdateUser(User user);
 
+        Task<List<User>> GetUsersByNameOrLastname(string name, string lastname);
+
         Task<User> GetByEmail(string email);
 
         Task<User> GetById(Guid id);

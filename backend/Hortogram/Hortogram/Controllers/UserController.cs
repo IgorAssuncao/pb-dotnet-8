@@ -27,9 +27,16 @@ namespace Hortogram.Controllers
 
         // GET: api/User
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] string name, [FromQuery] string lastname)
         {
             return Ok(await UserService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IActionResult> GetUsersByNameOrLastname([FromQuery] string name, [FromQuery] string lastname)
+        {
+            return Ok(await UserService.GetUsersByNameOrLastname(name, lastname));
         }
 
         // GET: api/User/5
@@ -67,15 +74,15 @@ namespace Hortogram.Controllers
 
             newUser.Id = id;
 
-            if (String.IsNullOrEmpty(firstName))
+            if (string.IsNullOrEmpty(firstName))
                 newUser.FirstName = userFound.FirstName;
-            if (String.IsNullOrEmpty(lastName))
+            if (string.IsNullOrEmpty(lastName))
                 newUser.Lastname = userFound.Lastname;
-            if (String.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email))
                 newUser.Email = userFound.Email;
-            if (String.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(password))
                 newUser.Password = userFound.Password;
-            if (String.IsNullOrEmpty(photoUrl))
+            if (string.IsNullOrEmpty(photoUrl))
                 newUser.PhotoURL = userFound.PhotoURL;
 
             bool result = await UserService.UpdateUser(id, firstName, lastName, email, password, photoUrl);
