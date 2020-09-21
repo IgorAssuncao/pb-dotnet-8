@@ -3,11 +3,11 @@ using System;
 
 namespace Services
 {
-    public class PostResponse
+    public class CommentResponse
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public string PhotoUrl { get; set; }
-        public string Description { get; set; }
+        public Guid PostId { get; set; }
+        public string Content { get; set; }
     }
 }

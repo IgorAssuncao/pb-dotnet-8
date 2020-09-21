@@ -24,7 +24,8 @@ namespace Services
                 await CommentRepository.CreateComment(comment);
                 return comment;
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return null;
@@ -36,7 +37,8 @@ namespace Services
             try
             {
                 return await CommentRepository.GetById(id);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return null;
@@ -50,7 +52,8 @@ namespace Services
                 var comment = await CommentRepository.GetById(id);
                 await CommentRepository.RemoveComment(comment);
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
@@ -64,24 +67,25 @@ namespace Services
                 await CommentRepository.UpdateComment(comment);
                 return true;
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
             }
         }
 
-        public async Task<List<Comment>> GetAllCommentsOfAPost(Guid postId)
+        public async Task<List<CommentResponse>> GetAllCommentsOfAPost(Guid postId)
         {
-            try
+            List<Comment> comments = await CommentRepository.GetAllCommentsOfAPost(postId);
+            List<CommentResponse> commentResponse = new List<CommentResponse>();
+
+            foreach (Comment comment in comments)
             {
-                var comments = await CommentRepository.GetAllCommentsOfAPost(postId);
-                return comments;
-            } catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
+                commentResponse.Add(new CommentResponse { Id = comment.Id, UserId = comment.UserId, PostId = comment.PostId, Content = comment.Content });
             }
+
+            return commentResponse;
         }
     }
 }
