@@ -24,7 +24,7 @@ namespace Repositories
             try
             {
                 await Context.UserDbSet.AddAsync(user);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -33,12 +33,12 @@ namespace Repositories
             }
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
             try
             {
                 Context.UserDbSet.Update(user);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace Repositories
             try
             {
                 await Context.UsersFollowers.AddAsync(userFollower);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -102,12 +102,12 @@ namespace Repositories
             }
         }
 
-        public void RemoveFollower(UsersFollowers userFollower)
+        public async Task RemoveFollower(UsersFollowers userFollower)
         {
             try
             {
                 Context.UsersFollowers.Remove(userFollower);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch (Exception e)
             {
