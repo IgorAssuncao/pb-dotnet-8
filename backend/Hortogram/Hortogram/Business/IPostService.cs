@@ -14,7 +14,7 @@ namespace Services
 
         Task<Post> GetById(Guid id);
 
-        Task<List<Post>> GetAllPostsOfAUser(Guid userId);
+        Task<List<PostResponse>> GetAllPostsOfAUser(Guid userId);
 
         Task<bool> UpdatePost(Post post);
 

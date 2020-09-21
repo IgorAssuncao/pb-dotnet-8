@@ -67,7 +67,7 @@ namespace Repositories
 
         public async Task<List<Post>> GetAllPostsOfAUser(Guid userId)
         {
-            return await Context.PostDbSet.Where(user => user.Id == userId).ToListAsync();
+            return await Context.PostDbSet.Where(post => post.UserId == userId).ToListAsync();
         }
     }
 }

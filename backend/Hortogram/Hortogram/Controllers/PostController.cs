@@ -51,7 +51,7 @@ namespace Hortogram.Controllers
 
         // POST api/Post
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] Guid UserId,[FromForm] PostRequest postReq)
+        public async Task<IActionResult> Post([FromForm] PostRequest postReq)
         {
             Guid Id = Guid.NewGuid();
 
@@ -59,7 +59,7 @@ namespace Hortogram.Controllers
 
             string photoUrl = await ImageService.UploadFile("post_picture", Id, imageProperties.FileExtension, imageProperties.ImageBytes);
 
-            Post postRes = await PostService.CreatePost(Id, UserId, postReq.Description, photoUrl);
+            Post postRes = await PostService.CreatePost(Id, postReq.UserId, photoUrl, postReq.Description);
 
             if (postRes == null)
                 return BadRequest();

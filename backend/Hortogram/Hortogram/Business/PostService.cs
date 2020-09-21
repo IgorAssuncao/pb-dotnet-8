@@ -28,9 +28,17 @@ namespace Services
             return await PostRepository.GetById(id);
         }
 
-        public async Task<List<Post>> GetAllPostsOfAUser(Guid userId)
+        public async Task<List<PostResponse>> GetAllPostsOfAUser(Guid userId)
         {
-            return await PostRepository.GetAllPostsOfAUser(userId);
+            List<Post> posts = await PostRepository.GetAllPostsOfAUser(userId);
+            List<PostResponse> postResponse = new List<PostResponse>();
+
+            foreach(Post post in posts)
+            {
+                postResponse.Add(new PostResponse { Id = post.Id, UserId = post.UserId, Description = post.Description, PhotoUrl = post.PhotoUrl });
+            }
+
+            return postResponse;
         }
 
         public async Task<bool> UpdatePost(Post post)
